@@ -5,12 +5,12 @@ import { Inter } from 'next/font/google';
 import Navbar from './Navbar';
 import { Theme } from '@radix-ui/themes';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Issue Tracker App',
   description: 'Created by Jessica Iacovozzi',
-}
+};
 
 export default function RootLayout({
   children,
@@ -27,4 +27,4 @@ export default function RootLayout({
       </body>
     </html>
   )
-}
+};
