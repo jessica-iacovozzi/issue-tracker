@@ -1,10 +1,9 @@
 'use client';
 
-import Link from 'next/link';
-import React from 'react';
-import { BsBugFill } from "react-icons/bs";
-import { usePathname } from 'next/navigation';
 import classnames from 'classnames';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { BsBugFill } from "react-icons/bs";
 
 const Navbar = () => {
   const currentPath = usePathname();
