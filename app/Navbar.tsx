@@ -37,9 +37,8 @@ const NavLinks = () => {
         <li key={link.label}>
         <Link href={link.href}
               className={classnames({
-                'text-gray-500': currentPath !== link.href,
-                'text-gray-950': currentPath === link.href,
-                'hover:text-gray-800 transition-colors': true
+                '!text-gray-950': currentPath === link.href,
+                'nav-link': true
               })}>{link.label}</Link></li>)}
     </ul>
   )
@@ -49,7 +48,7 @@ const AuthLinks = () => {
   const { status, data: session } = useSession();
 
   if (status === 'loading') return <Skeleton width='3rem'></Skeleton>
-  if (status === 'unauthenticated') return <Link href='/api/auth/signin'>Login</Link>
+  if (status === 'unauthenticated') return <Link className="nav-link" href='/api/auth/signin'>Login</Link>
   return (
     <Box>
       <DropdownMenu.Root>
@@ -68,7 +67,7 @@ const AuthLinks = () => {
             <Text size="2">{session!.user!.email}</Text>
           </DropdownMenu.Label>
           <DropdownMenu.Item>
-            <Link href="/api/auth/signout">Log out</Link>
+            <Link className="nav-link" href="/api/auth/signout">Log out</Link>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>

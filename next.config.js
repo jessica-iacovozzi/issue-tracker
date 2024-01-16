@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async header() {
+  async headers() {
     return [
       {
         source: '/:path*', // Affects all endpoints
