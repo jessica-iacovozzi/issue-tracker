@@ -14,6 +14,14 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
+    screens: {
+      'initial': '0px',
+      'xs': '520px',
+      'sm': '768px',
+      'md': '1024px',
+      'lg': '1280px',
+      'xl': '1640px',
+    }
   },
   plugins: [
     require('@tailwindcss/typography')

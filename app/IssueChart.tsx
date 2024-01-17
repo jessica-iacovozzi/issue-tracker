@@ -5,14 +5,14 @@ import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar } from 'recharts';
 
 interface Props {
   open: number;
-  inProgress: number;
+  ongoing: number;
   closed: number;
 }
 
-const IssueChart = ({ open, inProgress, closed }: Props) => {
+const IssueChart = ({ open, ongoing, closed }: Props) => {
   const data = [
     { label: 'Open', value: open },
-    { label: 'In Progress', value: inProgress },
+    { label: 'Ongoing', value: ongoing },
     { label: 'Closed', value: closed }
   ];
 
@@ -22,7 +22,7 @@ const IssueChart = ({ open, inProgress, closed }: Props) => {
         <BarChart data={data}>
           <XAxis dataKey='label' />
           <YAxis />
-          <Bar dataKey='value' barSize={75} style={{ fill: 'var(--accent-9)' }} />
+          <Bar dataKey='value' barSize={60} style={{ fill: 'var(--accent-9)' }} />
         </BarChart>
       </ResponsiveContainer>
     </Card>

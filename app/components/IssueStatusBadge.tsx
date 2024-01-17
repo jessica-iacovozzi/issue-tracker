@@ -7,7 +7,7 @@ interface Props {
 
 const statusMap: Record<Status, { label: string, color: 'red' | 'yellow' | 'green' }> = {
   OPEN: { label: 'Open', color: 'red'},
-  IN_PROGRESS: { label: 'In Progress', color: 'yellow'},
+  ONGOING: { label: 'Ongoing', color: 'yellow'},
   CLOSED: { label: 'Closed', color: 'green'}
 }
 

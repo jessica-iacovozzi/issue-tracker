@@ -8,7 +8,7 @@ const statuses: { label: string, value?: Status }[] = [
   { label: 'All' },
   { label: 'Open', value: 'OPEN' },
   { label: 'Closed', value: 'CLOSED' },
-  { label: 'In progress', value: 'IN_PROGRESS' }
+  { label: 'Ongoing', value: 'ONGOING' }
 ];
 
 const IssueStatusFilter = () => {

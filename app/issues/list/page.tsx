@@ -4,7 +4,6 @@ import { Status } from '@prisma/client';
 import IssuesTable, { IssueQuery, columnNames } from './IssuesTable';
 import IssuesToolbar from './IssuesToolbar';
 
-
 interface Props {
   searchParams: IssueQuery
 }
@@ -25,7 +24,10 @@ const IssuesPage = async ({ searchParams }: Props) => {
     where: { status },
     orderBy,
     skip: (page - 1) * pageSize,
-    take: pageSize
+    take: pageSize,
+    include: {
+      assignee: true
+    }
   });
 
   return (

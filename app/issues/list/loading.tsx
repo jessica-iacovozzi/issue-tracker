@@ -12,8 +12,8 @@ const LoadingIssuesPage = async () => {
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell width='33%'>Issue</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell width='33%' className='hidden md:table-cell'>Status</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell width='33%' className='hidden md:table-cell'>Created</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell width='33%' className='hidden sm:table-cell'>Status</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell width='33%' className='hidden sm:table-cell'>Created</Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -21,12 +21,12 @@ const LoadingIssuesPage = async () => {
             <Table.Row key={issue}>
               <Table.Cell width='33%'>
                 <Skeleton />
-                <div className='block md:hidden'>
+                <div className='block sm:hidden'>
                   <Skeleton />
                 </div>
               </Table.Cell>
-              <Table.Cell width='33%' className='hidden md:table-cell'><Skeleton /></Table.Cell>
-              <Table.Cell width='33%' className='hidden md:table-cell'><Skeleton /></Table.Cell>
+              <Table.Cell width='33%' className='hidden sm:table-cell'><Skeleton /></Table.Cell>
+              <Table.Cell width='33%' className='hidden sm:table-cell'><Skeleton /></Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

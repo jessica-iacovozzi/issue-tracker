@@ -23,7 +23,7 @@ model Issue {
 
 enum Status {
   OPEN
-  IN_PROGRESS
+  ONGOING
   CLOSED
 }
 

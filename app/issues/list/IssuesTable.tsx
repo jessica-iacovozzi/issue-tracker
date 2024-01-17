@@ -1,7 +1,7 @@
 import { IssueStatusBadge } from '@/app/components'
 import { Issue, Status } from '@prisma/client'
 import { ArrowUpIcon } from '@radix-ui/react-icons'
-import { Table } from '@radix-ui/themes'
+import { Avatar, Table } from '@radix-ui/themes'
 import Link from 'next/link'
 
 export interface IssueQuery {
@@ -11,18 +11,27 @@ export interface IssueQuery {
   orderDirection: 'asc' | 'desc'
 }
 
-interface Props {
-  searchParams: IssueQuery,
-  issues: Issue[]
+interface Assignee {
+  id: string;
+  name: string | null;
+  email: string | null;
+  emailVerified: Date | null;
+  hashedPassword: string | null;
+  image: string | null;
 }
 
-const IssuesTable = async ({ searchParams, issues }: Props) => {
+interface Props {
+  searchParams: IssueQuery,
+  issues: ({ assignee: Assignee | null } & Issue)[]
+}
+
+const IssuesTable = ({ searchParams, issues }: Props) => {
   return (
     <Table.Root variant='surface'>
       <Table.Header>
         <Table.Row>
           {columns.map(column => (
-            <Table.ColumnHeaderCell key={column.value} className={column.className} width='33%'>
+            <Table.ColumnHeaderCell key={column.value} className={column.className}>
               <Link href={{
                 query: { ...searchParams, orderBy: column.value }
               }}>{column.label}</Link>
@@ -33,15 +42,24 @@ const IssuesTable = async ({ searchParams, issues }: Props) => {
       </Table.Header>
       <Table.Body>
         {issues.map(issue => (
-          <Table.Row key={issue.id}>
-            <Table.Cell width='33%'>
+          <Table.Row key={issue.id} className='justify-between'>
+            <Table.Cell width='30%'>
               <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
-              <div className='block md:hidden'>
+              <div className='block sm:hidden'>
                 <IssueStatusBadge status={issue.status} />
               </div>
             </Table.Cell>
-            <Table.Cell width='33%' className='hidden md:table-cell'><IssueStatusBadge status={issue.status} /></Table.Cell>
-            <Table.Cell width='33%' className='hidden md:table-cell'>{issue.createdAt.toDateString()}</Table.Cell>
+            <Table.Cell width='25%' className='hidden sm:table-cell'>
+              <IssueStatusBadge status={issue.status} />
+            </Table.Cell>
+            <Table.Cell width='30%' className='hidden sm:table-cell'>
+              {issue.createdAt.toDateString()}
+            </Table.Cell>
+            <Table.Cell width='15%'>
+            {issue.assigneeId && (
+              <Avatar size='2' radius='full' src={issue.assignee!.image!} fallback='?' />
+            )}
+            </Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>
@@ -49,10 +67,11 @@ const IssuesTable = async ({ searchParams, issues }: Props) => {
   )
 }
 
-const columns: { label: string, value: keyof Issue, className?: string }[] = [
+const columns: { label: string, value: string, className?: string }[] = [
   { label: 'Issue', value: 'title' },
-  { label: 'Status', value: 'status', className: 'hidden md:table-cell' },
-  { label: 'Created', value: 'createdAt', className: 'hidden md:table-cell' }
+  { label: 'Status', value: 'status', className: 'hidden sm:table-cell' },
+  { label: 'Created', value: 'createdAt', className: 'hidden sm:table-cell' },
+  { label: 'Assignee', value: 'assigneeId' }
 ];
 
 export const columnNames = columns.map(column => column.value);

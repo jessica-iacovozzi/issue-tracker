@@ -23,7 +23,7 @@ const IssueDetailPage = async ({ params }: Props) => {
 
   return (
     <Grid columns={{ initial: '1', sm: '5' }} gap='5'>
-      <Box className='max-w-xl md:col-span-4'>
+      <Box className='max-w-xl sm:col-span-4'>
         <IssueDetails issue={issue} />
       </Box>
       {session &&
