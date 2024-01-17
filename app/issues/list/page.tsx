@@ -6,7 +6,9 @@ interface Props {
   searchParams: {
     status: Status,
     orderBy: keyof Issue,
-    orderDirection: 'asc' | 'desc' }
+    page: string,
+    orderDirection: 'asc' | 'desc'
+  }
 }
 
 const IssuesPage = ({ searchParams }: Props) => {
