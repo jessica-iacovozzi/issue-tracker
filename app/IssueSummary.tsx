@@ -9,14 +9,14 @@ interface Props {
 }
 
 const IssueSummary = ({ open, inProgress, closed }: Props) => {
-  const containers: { label: string, value: number, status: Status, color: string, bgColor: string }[] = [
+  const containers: { label: string, value: number, status?: Status, color?: string, bgColor?: string }[] = [
     { label: 'Open Issues', value: open, status: 'OPEN', color: 'var(--red-a11)', bgColor: 'var(--red-a2)' },
-    { label: 'Issues In Progress', value: inProgress, status: "IN_PROGRESS", color: 'var(--yellow-a11)', bgColor: 'var(--yellow-a2)' },
+    { label: 'Issues in Progress', value: inProgress, status: "IN_PROGRESS", color: 'var(--yellow-a11)', bgColor: 'var(--yellow-a2)' },
     { label: 'Closed Issues', value: closed, status: 'CLOSED', color: 'var(--green-a11)', bgColor: 'var(--green-a2)' }
   ];
 
   return (
-    <Flex gap='4'>
+    <Flex gap='5'>
       {containers.map(container => (
         <Link style={{ color: container.color }} key={container.label} className='text-sm font-medium' href={`/issues/list?status=${container.status}`}>
           <Card style={{ borderColor: container.color, backgroundColor: container.bgColor }} size='2'>
@@ -27,6 +27,14 @@ const IssueSummary = ({ open, inProgress, closed }: Props) => {
           </Card>
         </Link>
       ))}
+      <Link key='Total Issues' className='hidden sm:block text-sm font-medium' href={'/issues/list'}>
+        <Card size='2'>
+          <Flex direction='column' gap='1'>
+            Total Issues
+            <Text weight='bold' size='5'>{closed + inProgress + open}</Text>
+          </Flex>
+        </Card>
+      </Link>
     </Flex>
   )
 }
