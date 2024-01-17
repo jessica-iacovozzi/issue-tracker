@@ -31,7 +31,7 @@ const IssuesTable = ({ searchParams, issues }: Props) => {
       <Table.Header>
         <Table.Row>
           {columns.map(column => (
-            <Table.ColumnHeaderCell key={column.value} className={column.className}>
+            <Table.ColumnHeaderCell key={column.value} className={column.className} align={column.value === 'assigneeId' ? 'center' : 'left'}>
               <Link href={{
                 query: { ...searchParams, orderBy: column.value }
               }}>{column.label}</Link>
@@ -55,7 +55,7 @@ const IssuesTable = ({ searchParams, issues }: Props) => {
             <Table.Cell width='30%' className='hidden sm:table-cell'>
               {issue.createdAt.toDateString()}
             </Table.Cell>
-            <Table.Cell width='15%'>
+            <Table.Cell width='15%' align='center'>
             {issue.assigneeId && (
               <Avatar size='2' radius='full' src={issue.assignee!.image!} fallback='?' />
             )}
