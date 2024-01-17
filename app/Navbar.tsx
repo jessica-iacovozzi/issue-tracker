@@ -66,9 +66,9 @@ const AuthLinks = () => {
           <DropdownMenu.Label>
             <Text size="2">{session!.user!.email}</Text>
           </DropdownMenu.Label>
-          <DropdownMenu.Item>
-            <Link className="nav-link" href="/api/auth/signout">Log out</Link>
-          </DropdownMenu.Item>
+          <Link className="nav-link" href="/api/auth/signout">
+            <DropdownMenu.Item>Log out</DropdownMenu.Item>
+          </Link>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </Box>
