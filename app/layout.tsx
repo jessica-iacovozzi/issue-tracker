@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Issue Tracker App',
-  description: 'Created by Jessica Iacovozzi',
+  description: 'Track your project issues easily. Created by Jessica Iacovozzi',
 };
 
 export default function RootLayout({

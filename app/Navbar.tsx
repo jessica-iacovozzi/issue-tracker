@@ -7,14 +7,18 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BsBugFill } from "react-icons/bs";
 import { Skeleton } from './components';
+import Image from 'next/image';
 
 const Navbar = () => {
   return (
     <nav className='flex border-b px-6 space-x-6 items-center mb-6 h-14'>
       <Container>
-        <Flex justify='between'>
+        <Flex justify='between' align='center'>
           <Flex align='center' gap='4'>
-            <Link href='/'><BsBugFill /></Link>
+            <Link href='/'>
+              <BsBugFill className='block xs:hidden'/>
+              <Image src='/IssueTrackerLogo.png' alt='Logo' width={180} height={80} className='hidden xs:block'/>
+            </Link>
             <NavLinks />
           </Flex>
           <AuthLinks />

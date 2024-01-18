@@ -33,6 +33,11 @@ const authOptions: NextAuthOptions = {
   ],
   session: {
     strategy: 'jwt'
+  },
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      return url.startsWith(baseUrl) ? url : baseUrl;
+    },
   }
 }
 
