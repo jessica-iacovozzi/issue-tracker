@@ -1,6 +1,6 @@
 import { IssueStatusBadge } from '@/app/components'
 import { Issue, Status } from '@prisma/client'
-import { ArrowUpIcon } from '@radix-ui/react-icons'
+import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons'
 import { Avatar, Table } from '@radix-ui/themes'
 import Link from 'next/link'
 
@@ -33,9 +33,17 @@ const IssuesTable = ({ searchParams, issues }: Props) => {
           {columns.map(column => (
             <Table.ColumnHeaderCell key={column.value} className={column.className} align={column.value === 'assigneeId' ? 'center' : 'left'}>
               <Link href={{
-                query: { ...searchParams, orderBy: column.value }
+                query: { ...searchParams, orderBy: column.value, orderDirection: searchParams.orderDirection === 'asc' ? 'desc' : 'asc' }
               }}>{column.label}</Link>
-              {column.value === searchParams.orderBy && <ArrowUpIcon className='inline align-text-bottom ms-1' />}
+              {column.value === searchParams.orderBy && (
+                <>
+                  {searchParams.orderDirection === 'asc' ? (
+                    <ArrowUpIcon className='inline align-text-bottom ms-1' />
+                  ) : (
+                    <ArrowDownIcon className='inline align-text-bottom ms-1' />
+                  )}
+                </>
+              )}
             </Table.ColumnHeaderCell>
           ))}
         </Table.Row>
