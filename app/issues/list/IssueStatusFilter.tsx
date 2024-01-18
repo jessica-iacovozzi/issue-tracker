@@ -4,7 +4,7 @@ import { Status } from '@prisma/client';
 import { Select } from '@radix-ui/themes';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const statuses: { label: string, value?: Status }[] = [
+export const statuses: { label: string, value?: Status }[] = [
   { label: 'All' },
   { label: 'Open', value: 'OPEN' },
   { label: 'Closed', value: 'CLOSED' },

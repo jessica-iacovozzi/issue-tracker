@@ -1,5 +1,6 @@
 'use client';
 
+import BackButton from '@/app/components/BackButton';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 import { issueSchema } from '@/app/validationSchema';
@@ -50,6 +51,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
             {error}
           </Callout.Text>
         </Callout.Root>)}
+      <BackButton />
       <form onSubmit={onSubmit}>
         <TextField.Root className='mb-5'>
           <TextField.Input defaultValue={issue?.title} placeholder="Title" {...register('title')} />

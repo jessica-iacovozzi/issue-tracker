@@ -8,6 +8,8 @@ import EditIssueButton from './EditIssueButton';
 import IssueDetails from './IssueDetails';
 import AssigneeSelect from './AssigneeSelect';
 import { cache } from 'react';
+import StatusSelect from './StatusSelect';
+import BackButton from '@/app/components/BackButton';
 
 interface Props {
   params: { id: string }
@@ -25,11 +27,13 @@ const IssueDetailPage = async ({ params }: Props) => {
   return (
     <Grid columns={{ initial: '1', sm: '5' }} gap='5'>
       <Box className='max-w-xl sm:col-span-4'>
+        <BackButton />
         <IssueDetails issue={issue} />
       </Box>
       {session &&
         <Box>
           <Flex direction='column' gap='4'>
+            <StatusSelect issue={issue} />
             <AssigneeSelect issue={issue} />
             <EditIssueButton issueId={issue.id} />
             <DeleteIssueButton issueId={issue.id} />

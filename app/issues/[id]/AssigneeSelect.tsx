@@ -6,15 +6,21 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Skeleton } from '@/app/components';
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const AssigneeSelect = ({ issue }: { issue: Issue } ) => {
   const { data: users, error, isLoading } = useUsers();
+  const router = useRouter();
 
   const assignIssue = (userId: string) => {
     axios
-    .patch('/api/issues/' + issue.id, { assigneeId: userId === 'unassigned' ? null : userId })
-    .catch(() => toast.error('Changes could not be saved.'))
-  }
+      .patch('/api/issues/' + issue.id, { assigneeId: userId === 'unassigned' ? null : userId })
+      .then(() => {
+        toast.success('Changes were saved successfully!');
+        router.refresh();
+      })
+      .catch(() => toast.error('Changes could not be saved.'))
+  };
 
   if (isLoading) return <Skeleton />;
   if (error) return null;
