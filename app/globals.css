@@ -8,6 +8,14 @@
 
 body {
   color: rgb(var(--foreground-rgb));
+  min-height: 100vh;
+}
+
+
+@layer base {
+  body {
+    @apply bg-gradient-to-b from-transparent to-teal-50
+  }
 }
 
 @layer utilities {
