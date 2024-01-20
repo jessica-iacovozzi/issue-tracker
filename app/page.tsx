@@ -1,27 +1,17 @@
-import { Flex, Grid } from "@radix-ui/themes";
-import IssueChart from "./IssueChart";
-import IssueSummary from "./IssueSummary";
-import LatestIssues from "./LatestIssues";
-import prisma from "@/prisma/client";
-import { Metadata } from "next";
+import { Button, Flex, Heading } from '@radix-ui/themes'
+import Link from 'next/link'
 
-export default async function Home() {
-  const open = await prisma.issue.count({ where: { status: 'OPEN' }});
-  const closed = await prisma.issue.count({ where: { status: 'CLOSED' }});
-  const ongoing = await prisma.issue.count({ where: { status: 'ONGOING' }});
-
+const Home = () => {
   return (
-    <Grid columns={{ initial: '1', md: '2' }} gap='5'>
-      <Flex direction='column' gap='5'>
-        <IssueSummary open={open} closed={closed} ongoing={ongoing} />
-        <IssueChart open={open} closed={closed} ongoing={ongoing} />
-      </Flex>
-      <LatestIssues />
-    </Grid>
+    <Flex direction='column' align='center' mx='2' gap='8'>
+      <Heading as='h1' size='9' align='center' mt='9' className='max-w-2xl'>
+        Track all of your project <span style={{ color: 'var(--accent-9)' }}>issues</span> in one place.
+      </Heading>
+      <Link href='/issues/list'>
+        <Button size='3'>Get started</Button>
+      </Link>
+    </Flex>
   )
 }
 
-export const metadata: Metadata = {
-  title: 'Issue Tracker - Dashboard',
-  description: 'View a summary of project issues'
-};
+export default Home

@@ -7,17 +7,18 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BsBugFill } from "react-icons/bs";
 import { Skeleton } from './components';
-import Image from 'next/image';
 
 const Navbar = () => {
   return (
     <nav className='flex border-b px-6 space-x-6 items-center mb-6 h-14'>
       <Container>
         <Flex justify='between' align='center'>
-          <Flex align='center' gap='4'>
+          <Flex align='center' gap='5'>
             <Link href='/'>
-              <BsBugFill className='block xs:hidden'/>
-              <Image src='/IssueTrackerLogo.png' alt='Logo' width={180} height={80} className='hidden xs:block'/>
+              <Flex align='center' gap='2'>
+                <BsBugFill />
+                <Text className='hidden xs:block'>Issue Tracker</Text>
+              </Flex>
             </Link>
             <NavLinks />
           </Flex>
@@ -31,7 +32,7 @@ const Navbar = () => {
 const NavLinks = () => {
   const currentPath = usePathname();
   const links = [
-    { label: 'Dashboard', href: '/' },
+    { label: 'Dashboard', href: '/dashboard' },
     { label: 'Issues', href: '/issues/list' }
   ];
 

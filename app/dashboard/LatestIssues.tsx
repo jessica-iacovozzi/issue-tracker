@@ -1,6 +1,6 @@
 import { Table, Flex, Avatar, Card, Heading } from '@radix-ui/themes'
 import prisma from '@/prisma/client';
-import { IssueStatusBadge } from './components';
+import { IssueStatusBadge } from '../components';
 import Link from 'next/link';
 
 const LatestIssues = async () => {
