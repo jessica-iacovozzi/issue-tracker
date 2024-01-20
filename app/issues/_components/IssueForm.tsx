@@ -15,6 +15,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { RxInfoCircled } from "react-icons/rx";
 import SimpleMDE from 'react-simplemde-editor';
 import { z } from 'zod';
+import toast, { Toaster } from 'react-hot-toast';
 
 type IssueFormData = z.infer<typeof issueSchema>;
 
@@ -22,26 +23,38 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
   const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormData>({
     resolver: zodResolver(issueSchema)
   });
+
   const router = useRouter();
   const [error, setError] = useState('');
   const [isSubmitting, setSubmitting] = useState(false);
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       setSubmitting(true);
       if (issue)
-        await axios.patch('/api/issues/' + issue.id, data)
+        await axios
+                .patch('/api/issues/' + issue.id, data)
+                .then(() => {
+                  setTimeout(() => {  router.push('/issues/' + issue.id); }, 1000);
+                  toast.success('Issue was edited successfully!');
+                })
       else
-        await axios.post('/api/issues', data);
-      router.push('/issues/list');
-      router.refresh();
+        await axios
+                .post('/api/issues', data)
+                .then(() => {
+                  toast.success('Issue was created successfully!');
+                  router.push('/issues/list');
+                })
     } catch (error) {
       setSubmitting(false);
       setError('An unexpected error occurred.');
+      toast.error('An unexpected error occurred.');
     }
   });
 
   return (
     <div className='max-w-xl'>
+      <Toaster />
       {error && (
         <Callout.Root color='red' className='mb-5'>
           <Callout.Icon>
