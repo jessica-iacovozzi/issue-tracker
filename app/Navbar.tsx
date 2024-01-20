@@ -12,16 +12,14 @@ const Navbar = () => {
   return (
     <nav className='flex border-b px-6 space-x-6 items-center mb-6 h-14'>
       <Container>
-        <Flex justify='between' align='center'>
-          <Flex align='center' gap='5'>
-            <Link href='/'>
-              <Flex align='center' gap='2'>
-                <BsBugFill />
-                <Text className='hidden xs:block'>Issue Tracker</Text>
-              </Flex>
-            </Link>
-            <NavLinks />
-          </Flex>
+        <Flex align='center' justify='between' gap='5'>
+          <Link href='/' className='w-1/5'>
+            <Flex align='center' gap='2'>
+              <BsBugFill />
+              <Text className='hidden sm:block'>Issue Tracker</Text>
+            </Flex>
+          </Link>
+          <NavLinks />
           <AuthLinks />
         </Flex>
       </Container>
@@ -55,7 +53,7 @@ const AuthLinks = () => {
   if (status === 'loading') return <Skeleton width='3rem'></Skeleton>
   if (status === 'unauthenticated') return <Link className="nav-link" href='/api/auth/signin'>Login</Link>
   return (
-    <Box>
+    <Box className='w-1/5 flex justify-end'>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           <Avatar
