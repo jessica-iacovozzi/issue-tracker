@@ -11,7 +11,7 @@ export const statuses: { label: string, value?: Status }[] = [
   { label: 'Ongoing', value: 'ONGOING' }
 ];
 
-const IssueStatusFilter = () => {
+const IssueStatusFilter = ({ link }: { link: string }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const updateParams = (status: Status) => {
@@ -21,7 +21,7 @@ const IssueStatusFilter = () => {
       params.append('orderBy', searchParams.get('orderBy')!)
 
     const query = params.size ? '?' + params.toString() : '';
-    router.push('/issues/list' + query);
+    router.push(link + query);
   }
 
   return (

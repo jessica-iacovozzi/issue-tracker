@@ -21,8 +21,8 @@ interface Assignee {
 }
 
 interface Props {
-  searchParams: IssueQuery,
-  issues: ({ assignee: Assignee | null } & Issue)[]
+  searchParams: IssueQuery;
+  issues: ({ assignee: Assignee | null } & Issue)[];
 }
 
 const IssuesTable = ({ searchParams, issues }: Props) => {

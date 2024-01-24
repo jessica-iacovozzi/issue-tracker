@@ -1,4 +1,4 @@
-import { Project } from "@prisma/client";
+import { Project, Status } from "@prisma/client";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { Table } from "@radix-ui/themes";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import Link from "next/link";
 export interface ProjectQuery {
   orderBy: string;
   orderDirection: 'asc' | 'desc';
-  page: string
+  page: string;
 }
 
 interface Props {

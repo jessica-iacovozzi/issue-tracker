@@ -5,15 +5,14 @@ import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 import { projectSchema } from '@/app/validationSchema';
 import { Project } from '@prisma/client';
-import { Button, Callout, Flex, Select, TextField } from '@radix-ui/themes';
+import { Button, Callout, TextField } from '@radix-ui/themes';
 import axios from 'axios';
 import "easymde/dist/easymde.min.css";
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import { RxInfoCircled } from "react-icons/rx";
-import SimpleMDE from 'react-simplemde-editor';
 import { z } from 'zod';
 
 type ProjectFormData = z.infer<typeof projectSchema>;
