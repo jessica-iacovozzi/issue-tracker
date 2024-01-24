@@ -13,6 +13,7 @@ const IssueForm = dynamic(
 )
 
 const IssueEditPage = async ({ params }: { params: { id: string }}) => {
+  const projects = await prisma.project.findMany();
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) }
   })
@@ -20,7 +21,7 @@ const IssueEditPage = async ({ params }: { params: { id: string }}) => {
   if (!issue) notFound();
 
   return (
-    <IssueForm issue={issue} />
+    <IssueForm issue={issue} projects={projects} />
   )
 }
 

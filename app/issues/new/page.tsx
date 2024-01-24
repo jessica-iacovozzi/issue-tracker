@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import IssueFormSkeleton from '../_components/IssueFormSkeleton';
 import { Metadata } from 'next';
+import prisma from '@/prisma/client';
 
 const IssueForm = dynamic(
   () => import('@/app/issues/_components/IssueForm'),
@@ -10,9 +11,11 @@ const IssueForm = dynamic(
   }
 )
 
-const NewIssuePage = () => {
+const NewIssuePage = async () => {
+  const projects = await prisma.project.findMany();
+
   return (
-    <IssueForm />
+    <IssueForm projects={projects} />
   )
 }
 

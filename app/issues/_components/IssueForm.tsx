@@ -5,8 +5,8 @@ import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 import { issueSchema } from '@/app/validationSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Issue } from '@prisma/client';
-import { Button, Callout, TextField } from '@radix-ui/themes';
+import { Issue, Project } from '@prisma/client';
+import { Button, Callout, Flex, Select, TextField } from '@radix-ui/themes';
 import axios from 'axios';
 import "easymde/dist/easymde.min.css";
 import { useRouter } from 'next/navigation';
@@ -19,23 +19,29 @@ import toast, { Toaster } from 'react-hot-toast';
 
 type IssueFormData = z.infer<typeof issueSchema>;
 
-const IssueForm = ({ issue }: { issue?: Issue }) => {
-  const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormData>({
-    resolver: zodResolver(issueSchema)
-  });
+interface Props {
+  issue?: Issue,
+  projects: Project[]
+}
 
+const IssueForm = ({ issue, projects }: Props) => {
+  const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormData>();
+  const [projectId, setProjectId] = useState<number>();
   const router = useRouter();
   const [error, setError] = useState('');
   const [isSubmitting, setSubmitting] = useState(false);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      data.projectId = projectId!;
+
       setSubmitting(true);
+
       if (issue)
         await axios
                 .patch('/api/issues/' + issue.id, data)
                 .then(() => {
-                  setTimeout(() => {  router.push('/issues/' + issue.id); }, 1000);
+                  setTimeout(() => { router.push('/issues/' + issue.id); }, 1000);
                   toast.success('Issue was edited successfully!');
                 })
       else
@@ -65,28 +71,47 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
           </Callout.Text>
         </Callout.Root>)}
       <BackButton />
-      <form onSubmit={onSubmit}>
-        <TextField.Root className='mb-5'>
+      <form onSubmit={onSubmit} id='issueform'>
+        <TextField.Root>
           <TextField.Input defaultValue={issue?.title} placeholder="Title" {...register('title')} />
         </TextField.Root>
         <ErrorMessage>
-          {errors.title?.message}
+          {errors?.title?.message}
         </ErrorMessage>
         <Controller
           name='description'
           control={control}
           defaultValue={issue?.description}
           render={({field}) =>
-            <SimpleMDE placeholder='Description' {...field} />
+            <SimpleMDE className='mt-5' placeholder='Description' {...field} />
           }>
         </Controller>
         <ErrorMessage>
-          {errors.description?.message}
+          {errors?.description?.message}
         </ErrorMessage>
-        <Button>
-          { issue ? 'Edit Issue' : 'Create new issue' }{' '}
-          {isSubmitting && <Spinner />}
-        </Button>
+        <Flex justify='between' mt='5'>
+          <Flex direction='column'>
+            <Select.Root
+              {...register('projectId')}
+              onValueChange={(value) => setProjectId(parseInt(value))}
+              defaultValue={issue?.projectId.toString()}>
+              <Select.Trigger placeholder='Select a project' />
+              <Select.Content>
+                <Select.Group>
+                  <Select.Label>Projects</Select.Label>
+                  {projects.map(project => <Select.Item key={project.id} value={project.id.toString()}>{project.title}</Select.Item>)}
+                </Select.Group>
+              </Select.Content>
+            </Select.Root>
+            <ErrorMessage>
+              {errors?.projectId?.message}
+            </ErrorMessage>
+          </Flex>
+          <Button>
+            { issue ? 'Edit Issue' : 'Create new issue' }{' '}
+            {isSubmitting && <Spinner />}
+          </Button>
+        </Flex>
       </form>
     </div>
   )
