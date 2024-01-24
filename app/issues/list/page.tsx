@@ -1,7 +1,7 @@
 import Pagination from '@/app/components/Pagination';
 import prisma from '@/prisma/client';
 import { Status } from '@prisma/client';
-import IssuesTable, { IssueQuery, columnNames } from './IssuesTable';
+import IssuesTable, { IssueQuery } from './IssuesTable';
 import IssuesToolbar from './IssuesToolbar';
 import { Metadata } from 'next';
 
@@ -27,7 +27,8 @@ const IssuesPage = async ({ searchParams }: Props) => {
     skip: (page - 1) * pageSize,
     take: pageSize,
     include: {
-      assignee: true
+      assignee: true,
+      project: true
     }
   });
 
@@ -42,6 +43,8 @@ const IssuesPage = async ({ searchParams }: Props) => {
     </>
   )
 };
+
+const columnNames = ['title', 'status', 'createdAt', 'projectId', 'assigneeId'];
 
 export const dynamic = 'force-dynamic';
 

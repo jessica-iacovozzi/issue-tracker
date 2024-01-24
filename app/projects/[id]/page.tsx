@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 import IssuesToolbar from "@/app/issues/list/IssuesToolbar";
 import Pagination from "@/app/components/Pagination";
 import { Status } from "@prisma/client";
-import IssuesTable, { IssueQuery, columnNames } from "@/app/issues/list/IssuesTable";
+import IssuesTable, { IssueQuery } from "@/app/issues/list/IssuesTable";
 
 interface Props {
   params: { id: string },
@@ -40,7 +40,8 @@ const ProjectIssuesPage = async ({ params, searchParams }: Props) => {
     skip: (page - 1) * pageSize,
     take: pageSize,
     include: {
-      assignee: true
+      assignee: true,
+      project: true
     }
   });
 
@@ -69,6 +70,8 @@ const ProjectIssuesPage = async ({ params, searchParams }: Props) => {
     </Grid>
   )
 }
+
+const columnNames = ['title', 'status', 'createdAt', 'projectId', 'assigneeId'];
 
 export async function generateMetadata({ params }: Props) {
   const project = await fetchProject(parseInt(params.id));

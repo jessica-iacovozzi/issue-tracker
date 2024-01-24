@@ -26,7 +26,7 @@ model Issue {
   assigneeId  String?  @db.VarChar(255)
   assignee    User?    @relation(fields: [assigneeId], references: [id])
   projectId   Int      @default(autoincrement())
-  project     Project  @relation(fields: [projectId], references: [id])
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 enum Status {
