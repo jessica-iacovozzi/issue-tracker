@@ -5,7 +5,7 @@ import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 import { projectSchema } from '@/app/validationSchema';
 import { Project } from '@prisma/client';
-import { Button, Callout, TextField } from '@radix-ui/themes';
+import { Button, Callout, Flex, Heading, TextField } from '@radix-ui/themes';
 import axios from 'axios';
 import "easymde/dist/easymde.min.css";
 import { useRouter } from 'next/navigation';
@@ -49,7 +49,7 @@ const ProjectForm = ({ project }: { project?: Project }) => {
   });
 
   return (
-    <div className='max-w-xl'>
+    <>
       <Toaster />
       {error && (
         <Callout.Root color='red' className='mb-5'>
@@ -61,19 +61,24 @@ const ProjectForm = ({ project }: { project?: Project }) => {
           </Callout.Text>
         </Callout.Root>)}
       <BackButton />
-      <form onSubmit={onSubmit} id='projectform'>
-        <TextField.Root mb='5'>
-          <TextField.Input defaultValue={project?.title} placeholder="Title" {...register('title')} />
-        </TextField.Root>
-        <ErrorMessage>
-          {errors.title?.message}
-        </ErrorMessage>
-        <Button>
-          { project ? 'Edit project' : 'Create new project' }{' '}
-          {isSubmitting && <Spinner />}
-        </Button>
-      </form>
-    </div>
+      <Flex align='center' direction='column'>
+        <Heading mb='5'>{ project ? 'Edit your project' : 'Create a new project' }</Heading>
+        <form onSubmit={onSubmit} id='projectform'>
+          <Flex align='center' direction='column'>
+            <TextField.Root mb='5'>
+              <TextField.Input defaultValue={project?.title} placeholder="Title" {...register('title')} />
+            </TextField.Root>
+            <ErrorMessage>
+              {errors.title?.message}
+            </ErrorMessage>
+            <Button>
+              { project ? 'Save' : 'Create' }{' '}
+              {isSubmitting && <Spinner />}
+            </Button>
+          </Flex>
+        </form>
+      </Flex>
+    </>
   )
 }
 

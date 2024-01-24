@@ -26,15 +26,15 @@ const IssueDetailPage = async ({ params }: Props) => {
 
   return (
     <Grid columns={{ initial: '1', sm: '5' }} gap='5'>
-      <Box className='max-w-xl sm:col-span-4'>
+      <Box className='max-w-3xl sm:col-span-4'>
         <BackButton />
         <IssueDetails issue={issue} />
       </Box>
       {session &&
         <Box>
           <Flex direction='column' gap='4'>
-            <StatusSelect issue={issue} />
             <AssigneeSelect issue={issue} />
+            <StatusSelect issue={issue} />
             <EditIssueButton issueId={issue.id} />
             <DeleteIssueButton issueId={issue.id} />
           </Flex>

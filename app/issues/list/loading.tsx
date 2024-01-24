@@ -7,7 +7,7 @@ const LoadingIssuesPage = async () => {
 
   return (
     <div>
-      <IssuesToolbar />
+      <IssuesToolbar link='/issues/list' />
       <Table.Root variant='surface'>
         <Table.Header>
           <Table.Row>

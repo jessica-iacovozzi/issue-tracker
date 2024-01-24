@@ -48,7 +48,7 @@ const ProjectIssuesPage = async ({ params, searchParams }: Props) => {
 
   return (
     <Grid columns={{ initial: '1', sm: '5' }} gap='5'>
-      <Box className='max-w-xl sm:col-span-4'>
+      <Box className='max-w-3xl sm:col-span-4'>
         <BackButton />
         <Heading size='7' mb='5'>{project.title}</Heading>
         <IssuesToolbar link={`/projects/${project.id}`} />

@@ -24,7 +24,7 @@ const IssueDetails = async ({ issue }: { issue: Issue }) => {
           <Text>{issue.createdAt.toDateString()}</Text>
         </Flex>
       </Flex>
-      <Card className='prose px-4 py-2' mt='4'>
+      <Card className='px-6 py-4' mt='4'>
         <ReactMarkdown>{issue.description}</ReactMarkdown>
       </Card>
     </>

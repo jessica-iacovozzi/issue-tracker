@@ -22,7 +22,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue } ) => {
       .catch(() => toast.error('Changes could not be saved.'))
   };
 
-  if (isLoading) return <Skeleton />;
+  if (isLoading) return <Skeleton height='2rem' />;
   if (error) return null;
 
   return (

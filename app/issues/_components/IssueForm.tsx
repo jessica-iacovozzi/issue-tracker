@@ -26,7 +26,8 @@ interface Props {
 
 const IssueForm = ({ issue, projects, stringProjectId }: Props) => {
   const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormData>();
-  const [projectId, setProjectId] = useState<number>();
+  const project = parseInt(stringProjectId || '');
+  const [projectId, setProjectId] = useState<number>(project);
   const router = useRouter();
   const [error, setError] = useState('');
   const [isSubmitting, setSubmitting] = useState(false);

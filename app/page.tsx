@@ -7,8 +7,8 @@ const Home = () => {
       <Heading as='h1' size='9' align='center' mt='9' className='max-w-2xl'>
         Track all of your project <span style={{ color: 'var(--accent-9)' }}>issues</span> in one place.
       </Heading>
-      <Link href='/issues/list'>
-        <Button size='3'>Get started</Button>
+      <Link href='/projects/new'>
+        <Button size='3'>Create a project</Button>
       </Link>
     </Flex>
   )
