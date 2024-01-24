@@ -2,12 +2,23 @@ import { IssueStatusBadge } from '@/app/components'
 import { Issue } from '@prisma/client'
 import { Card, Flex, Heading, Text } from '@radix-ui/themes'
 import ReactMarkdown from 'react-markdown'
+import prisma from '@/prisma/client'
+import Link from 'next/link'
 
-const IssueDetails = ({ issue }: { issue: Issue }) => {
+const IssueDetails = async ({ issue }: { issue: Issue }) => {
+  const project = await prisma.project.findUnique({
+    where: { id: issue.projectId }
+  });
+
   return (
     <>
       <Flex gap='4' my='2' align='center' justify='between'>
-        <Heading>{issue.title}</Heading>
+        <Flex direction='column' gap='2'>
+          <Heading>{issue.title}</Heading>
+          <Heading weight='light' size='2' as='h2'>
+            Project: <Link href={`/projects/${project!.id}`}>{project!.title}</Link>
+          </Heading>
+        </Flex>
         <Flex gap='4'>
           <IssueStatusBadge status={issue.status} />
           <Text>{issue.createdAt.toDateString()}</Text>

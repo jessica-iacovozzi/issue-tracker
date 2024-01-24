@@ -33,7 +33,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
 
   return (
     <>
-      <IssuesToolbar />
+      <IssuesToolbar link='/issues/list' />
       <IssuesTable searchParams={searchParams} issues={issues} />
       <Pagination
         itemCount={issuesCount}

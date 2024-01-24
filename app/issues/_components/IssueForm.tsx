@@ -19,11 +19,12 @@ import { z } from 'zod';
 type IssueFormData = z.infer<typeof issueSchema>;
 
 interface Props {
-  issue?: Issue,
-  projects: Project[]
+  issue?: Issue;
+  projects: Project[];
+  stringProjectId?: string
 }
 
-const IssueForm = ({ issue, projects }: Props) => {
+const IssueForm = ({ issue, projects, stringProjectId }: Props) => {
   const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormData>();
   const [projectId, setProjectId] = useState<number>();
   const router = useRouter();
@@ -93,7 +94,7 @@ const IssueForm = ({ issue, projects }: Props) => {
             <Select.Root
               {...register('projectId')}
               onValueChange={(value) => setProjectId(parseInt(value))}
-              defaultValue={issue?.projectId.toString()}>
+              defaultValue={issue?.projectId.toString() || stringProjectId}>
               <Select.Trigger placeholder='Select a project' />
               <Select.Content>
                 <Select.Group>

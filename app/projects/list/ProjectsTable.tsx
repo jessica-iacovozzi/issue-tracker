@@ -7,6 +7,7 @@ export interface ProjectQuery {
   orderBy: string;
   orderDirection: 'asc' | 'desc';
   page: string;
+  project: string;
 }
 
 interface Props {
