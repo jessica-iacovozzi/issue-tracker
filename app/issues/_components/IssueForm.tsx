@@ -34,9 +34,9 @@ const IssueForm = ({ issue, projects, stringProjectId }: Props) => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      data.projectId = projectId!;
-
       setSubmitting(true);
+
+      data.projectId = projectId;
 
       if (issue)
         await axios

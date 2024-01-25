@@ -79,7 +79,7 @@ const IssuesTable = ({ searchParams, issues }: Props) => {
             </Table.Cell>
             {issue.projectId && isIssuesListPage && (
               <Table.Cell width='20%'>
-                <Text>{issue.project.title}</Text>
+                <Link href={`/projects/${issue.projectId}`}>{issue.project.title}</Link>
               </Table.Cell>
             )}
             <Table.Cell align='center'>

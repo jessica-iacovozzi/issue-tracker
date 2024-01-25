@@ -3,6 +3,12 @@ import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import IssueFormSkeleton from "../../_components/IssueFormSkeleton";
 import { Metadata } from 'next';
+import { ProjectQuery } from '@/app/projects/list/ProjectsTable';
+
+interface Props {
+  searchParams: ProjectQuery;
+  params: { id: string }
+}
 
 const IssueForm = dynamic(
   () => import('@/app/issues/_components/IssueForm'),
@@ -12,7 +18,7 @@ const IssueForm = dynamic(
   }
 )
 
-const IssueEditPage = async ({ params }: { params: { id: string }}) => {
+const IssueEditPage = async ({ searchParams, params }: Props) => {
   const projects = await prisma.project.findMany();
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) }
@@ -21,7 +27,7 @@ const IssueEditPage = async ({ params }: { params: { id: string }}) => {
   if (!issue) notFound();
 
   return (
-    <IssueForm issue={issue} projects={projects} />
+    <IssueForm issue={issue} projects={projects} stringProjectId={searchParams.project} />
   )
 }
 

@@ -1,16 +1,17 @@
-import { cache } from "react";
-import prisma from "@/prisma/client";
-import { getServerSession } from "next-auth";
 import authOptions from "@/app/auth/authOptions";
 import BackButton from "@/app/components/BackButton";
-import { Grid, Box, Flex, Heading, Table } from "@radix-ui/themes";
-import EditProjectButton from "./EditProjectButton";
-import DeleteProjectButton from "./DeleteProjectButton";
-import { notFound } from "next/navigation";
-import IssuesToolbar from "@/app/issues/list/IssuesToolbar";
 import Pagination from "@/app/components/Pagination";
-import { Status } from "@prisma/client";
 import IssuesTable, { IssueQuery } from "@/app/issues/list/IssuesTable";
+import IssuesToolbar from "@/app/issues/list/IssuesToolbar";
+import prisma from "@/prisma/client";
+import { Status } from "@prisma/client";
+import { Box, Button, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { getServerSession } from "next-auth";
+import { notFound } from "next/navigation";
+import { cache } from "react";
+import DeleteProjectButton from "./DeleteProjectButton";
+import EditProjectButton from "./EditProjectButton";
+import Link from 'next/link';
 
 interface Props {
   params: { id: string },
@@ -52,8 +53,16 @@ const ProjectIssuesPage = async ({ params, searchParams }: Props) => {
       <Box className='max-w-3xl sm:col-span-4'>
         <BackButton />
         <Heading size='7' mb='5'>{project.title}</Heading>
-        <IssuesToolbar link={`/projects/${project.id}`} />
-        <IssuesTable searchParams={searchParams} issues={issues} />
+        {issues.length ?
+          <>
+            <IssuesToolbar link={`/projects/${project.id}`} />
+            <IssuesTable searchParams={searchParams} issues={issues} />
+          </>
+          :
+          <Button className="w-fit">
+            <Link href={'/issues/new?project=' + project.id}>Create your first issue</Link>
+          </Button>
+        }
         <Pagination
           itemCount={issuesCount}
           pageSize={pageSize}
