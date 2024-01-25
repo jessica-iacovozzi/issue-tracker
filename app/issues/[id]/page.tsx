@@ -10,6 +10,7 @@ import AssigneeSelect from './AssigneeSelect';
 import { cache } from 'react';
 import StatusSelect from './StatusSelect';
 import BackButton from '@/app/components/BackButton';
+import IssueImages from './IssueImages';
 
 interface Props {
   params: { id: string }
@@ -29,6 +30,7 @@ const IssueDetailPage = async ({ params }: Props) => {
       <Box className='max-w-3xl sm:col-span-4'>
         <BackButton />
         <IssueDetails issue={issue} />
+        <IssueImages issue={issue} />
       </Box>
       {session &&
         <Box>
