@@ -21,7 +21,7 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
       <Table.Header>
         <Table.Row>
           {columns.map(column => (
-            <Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell key={column.value}>
               <Link href={{
                 query: { ...searchParams, orderBy: column.value, orderDirection: searchParams.orderDirection === 'asc' ? 'desc' : 'asc' }
               }}>{column.label}</Link>

@@ -8,8 +8,8 @@ const IssueImages = ({ issue }: { issue: Issue }) => {
   return (
     <Grid columns='2' gap='5' mt='5'>
       {issue.images && issue.images.map((id) => (
-        <AspectRatio ratio={4/3}>
-          <CldImage key={id} src={id} fill alt={id} className="rounded-lg" />
+        <AspectRatio key={id} ratio={4/3}>
+          <CldImage src={id} fill alt={id} className="rounded-lg" />
         </AspectRatio>
       ))}
     </Grid>

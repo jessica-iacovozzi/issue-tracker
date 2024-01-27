@@ -58,7 +58,7 @@ const NavLinks = ({ projects }: { projects: Project[]}) => {
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
           {projects.map(project => (
-            <DropdownMenu.Item>
+            <DropdownMenu.Item key={project.id}>
               <Link href={`/projects/${project.id}`}>
                 {project.title}
               </Link>
