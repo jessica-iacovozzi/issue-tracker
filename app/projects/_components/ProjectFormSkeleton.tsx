@@ -1,14 +1,17 @@
 import { Skeleton } from '@/app/components';
-import { Box } from '@radix-ui/themes';
+import { Flex, Box } from '@radix-ui/themes';
 
-const IssueFormSkeleton = () => {
+const ProjectFormSkeleton = () => {
   return (
-    <Box className="max-w-xl">
-      <Skeleton height='2rem' width='4rem' className='mb-5' />
-      <Skeleton height='2rem' className='mb-5' />
-      <Skeleton height='2rem' width='8rem' />
+    <Box>
+      <Skeleton height='2rem' width='4rem' className='mb-3' />
+      <Flex align='center' direction='column'>
+        <Skeleton height='2rem' width='12rem' className='mb-4' />
+        <Skeleton height='2rem' width='8rem' className='mb-4' />
+        <Skeleton height='2rem' width='4rem' />
+      </Flex>
     </Box>
   )
 }
 
-export default IssueFormSkeleton;
+export default ProjectFormSkeleton;

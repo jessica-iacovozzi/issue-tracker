@@ -6,9 +6,12 @@ const IssueFormSkeleton = () => {
     <Box className="max-w-xl">
       <Skeleton height='2rem' width='4rem' className='mb-5' />
       <Skeleton height='2rem' className='mb-5' />
-      <Skeleton height='23rem' className='mb-10' />
+      <Skeleton height='23rem' className='mb-14' />
       <Flex justify='between'>
-        <Skeleton height='2rem' width='8rem' />
+        <Flex gap='5'>
+          <Skeleton height='2rem' width='8rem' />
+          <Skeleton height='2rem' width='8rem' />
+        </Flex>
         <Skeleton height='2rem' width='8rem' />
       </Flex>
     </Box>
