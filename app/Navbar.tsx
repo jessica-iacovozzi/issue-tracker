@@ -17,8 +17,8 @@ const Navbar = ({ projects }: { projects: Project[]}) => {
         <Flex align='center' justify='between' gap='5'>
           <Link href='/' className='w-1/5'>
             <Flex align='center' gap='2'>
-              <BsBugFill />
-              <Text className='hidden sm:block'>Issue Tracker</Text>
+              <BsBugFill color='var(--accent-10)' />
+              <Text className='hidden sm:block'>ISSUE TRACꓘER</Text>
             </Flex>
           </Link>
           <NavLinks projects={projects} />
@@ -48,24 +48,24 @@ const NavLinks = ({ projects }: { projects: Project[]}) => {
             {link.label}
           </Link>
         </li>
-        )}
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger>
-            <Button variant='ghost' size='3' color='gray'>
-              Projects
-              <CaretDownIcon width="16" height="16" />
-            </Button>
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            {projects.map(project => (
-              <DropdownMenu.Item>
-                <Link href={`/projects/${project.id}`}>
-                  {project.title}
-                </Link>
-              </DropdownMenu.Item>
-            ))}
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
+      )}
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          <Button variant='ghost' size='3' color='gray'>
+            Projects
+            <CaretDownIcon width="16" height="16" />
+          </Button>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          {projects.map(project => (
+            <DropdownMenu.Item>
+              <Link href={`/projects/${project.id}`}>
+                {project.title}
+              </Link>
+            </DropdownMenu.Item>
+          ))}
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     </ul>
   )
 };
@@ -77,6 +77,11 @@ const AuthLinks = () => {
   if (status === 'unauthenticated') return <Link className="nav-link w-1/5 flex justify-end" href='/api/auth/signin'>Login</Link>
   return (
     <Box className='w-1/5 flex justify-end'>
+      <Link className='hidden md:block me-10' href={'/projects/new'}>
+        <Button variant='soft'>
+          Create project
+        </Button>
+      </Link>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           <Avatar
