@@ -24,7 +24,7 @@ interface Assignee {
 }
 
 interface Project {
-  title: string
+  title: string;
 }
 
 interface Props {

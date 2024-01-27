@@ -1,14 +1,16 @@
 'use client';
 
-import { Avatar, Box, Container, DropdownMenu, Text, Flex } from '@radix-ui/themes';
-import classnames from 'classnames';
+import { Avatar, Box, Button, Container, DropdownMenu, Flex, Text } from '@radix-ui/themes';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { BsBugFill } from "react-icons/bs";
 import { Skeleton } from './components';
+import { usePathname } from 'next/navigation';
+import { Project } from '@prisma/client';
+import classnames from 'classnames';
+import { CaretDownIcon } from '@radix-ui/react-icons';
 
-const Navbar = () => {
+const Navbar = ({ projects }: { projects: Project[]}) => {
   return (
     <nav className='flex border-b px-6 space-x-6 items-center mb-6 h-14'>
       <Container>
@@ -19,7 +21,7 @@ const Navbar = () => {
               <Text className='hidden sm:block'>Issue Tracker</Text>
             </Flex>
           </Link>
-          <NavLinks />
+          <NavLinks projects={projects} />
           <AuthLinks />
         </Flex>
       </Container>
@@ -27,23 +29,43 @@ const Navbar = () => {
   )
 };
 
-const NavLinks = () => {
+const NavLinks = ({ projects }: { projects: Project[]}) => {
   const currentPath = usePathname();
   const links = [
     { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Issues', href: '/issues/list' },
-    { label: 'Projects', href: '/projects/list' },
+    { label: 'Issues', href: '/issues/list' }
   ];
 
   return (
-    <ul className='flex space-x-4'>
+    <ul className='flex items-center'>
       {links.map(link =>
         <li key={link.label}>
-        <Link href={link.href}
-              className={classnames({
-                '!text-gray-950': currentPath === link.href,
-                'nav-link': true
-              })}>{link.label}</Link></li>)}
+          <Link href={link.href}
+                className={classnames({
+                  '!text-gray-950': currentPath === link.href,
+                  'nav-link': true
+                })}>
+            {link.label}
+          </Link>
+        </li>
+        )}
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger>
+            <Button variant='ghost' size='3' color='gray'>
+              Projects
+              <CaretDownIcon width="16" height="16" />
+            </Button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            {projects.map(project => (
+              <DropdownMenu.Item>
+                <Link href={`/projects/${project.id}`}>
+                  {project.title}
+                </Link>
+              </DropdownMenu.Item>
+            ))}
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
     </ul>
   )
 };

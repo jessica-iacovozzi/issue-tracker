@@ -1,4 +1,4 @@
-import { Project, Status } from "@prisma/client";
+import { Project } from "@prisma/client";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { Table } from "@radix-ui/themes";
 import Link from "next/link";
@@ -20,10 +20,11 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
     <Table.Root variant='surface'>
       <Table.Header>
         <Table.Row>
+          {columns.map(column => (
             <Table.ColumnHeaderCell>
               <Link href={{
-                query: { ...searchParams, orderBy: 'title', orderDirection: searchParams.orderDirection === 'asc' ? 'desc' : 'asc' }
-              }}>Title</Link>
+                query: { ...searchParams, orderBy: column.value, orderDirection: searchParams.orderDirection === 'asc' ? 'desc' : 'asc' }
+              }}>{column.label}</Link>
               {searchParams.orderBy === 'title' && (
                 <>
                   {searchParams.orderDirection === 'asc' ? (
@@ -34,6 +35,7 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
                 </>
               )}
             </Table.ColumnHeaderCell>
+          ))}
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -48,5 +50,12 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
     </Table.Root>
   )
 }
+
+const columns: { label: string, value?: string }[] = [
+  { label: 'Project', value: 'title' },
+  { label: 'Ongoing issues' },
+  { label: 'Closed issues' },
+  { label: 'Open issues' }
+]
 
 export default ProjectsTable
