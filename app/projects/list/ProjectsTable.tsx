@@ -20,22 +20,20 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
     <Table.Root variant='surface'>
       <Table.Header>
         <Table.Row>
-          {columns.map(column => (
-            <Table.ColumnHeaderCell key={column.value}>
-              <Link href={{
-                query: { ...searchParams, orderBy: column.value, orderDirection: searchParams.orderDirection === 'asc' ? 'desc' : 'asc' }
-              }}>{column.label}</Link>
-              {searchParams.orderBy === 'title' && (
-                <>
-                  {searchParams.orderDirection === 'asc' ? (
-                    <ArrowUpIcon className='inline align-text-bottom ms-1' />
-                  ) : (
-                    <ArrowDownIcon className='inline align-text-bottom ms-1' />
-                  )}
-                </>
-              )}
-            </Table.ColumnHeaderCell>
-          ))}
+          <Table.ColumnHeaderCell key='title'>
+            <Link href={{
+              query: { ...searchParams, orderBy: 'title', orderDirection: searchParams.orderDirection === 'asc' ? 'desc' : 'asc' }
+            }}>Project</Link>
+            {searchParams.orderBy === 'title' && (
+              <>
+                {searchParams.orderDirection === 'asc' ? (
+                  <ArrowUpIcon className='inline align-text-bottom ms-1' />
+                ) : (
+                  <ArrowDownIcon className='inline align-text-bottom ms-1' />
+                )}
+              </>
+            )}
+          </Table.ColumnHeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -50,12 +48,5 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
     </Table.Root>
   )
 }
-
-const columns: { label: string, value?: string }[] = [
-  { label: 'Project', value: 'title' },
-  { label: 'Ongoing issues' },
-  { label: 'Closed issues' },
-  { label: 'Open issues' }
-]
 
 export default ProjectsTable

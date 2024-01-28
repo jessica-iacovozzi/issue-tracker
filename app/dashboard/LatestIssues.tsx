@@ -12,6 +12,8 @@ const LatestIssues = async () => {
     }
   });
 
+  if (!issues) return null;
+  
   return (
     <Card>
       <Heading m='3' size='7'>Latest Issues</Heading>

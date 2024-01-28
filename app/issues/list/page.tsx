@@ -4,8 +4,9 @@ import { Status } from '@prisma/client';
 import IssuesTable, { IssueQuery } from './IssuesTable';
 import IssuesToolbar from './IssuesToolbar';
 import { Metadata } from 'next';
-import { Button } from '@radix-ui/themes';
+import { Button, Heading } from '@radix-ui/themes';
 import Link from 'next/link';
+import BackButton from '@/app/components/BackButton';
 
 interface Props {
   searchParams: IssueQuery
@@ -36,15 +37,19 @@ const IssuesPage = async ({ searchParams }: Props) => {
 
   return (
     <>
+      <BackButton />
       {issues.length ?
         <>
           <IssuesToolbar link='/issues/list' />
           <IssuesTable searchParams={searchParams} issues={issues} />
         </>
         :
-        <Button className="w-fit">
-          <Link href='/issues/new'>Create your first issue</Link>
-        </Button>
+        <>
+          <Heading size='7' mb='5'>Create your first issue</Heading>
+          <Button className="w-fit">
+            <Link href='/issues/new'>Save</Link>
+          </Button>
+        </>
         }
       <Pagination
         itemCount={issuesCount}
