@@ -1,14 +1,14 @@
 'use client';
 
+import { Project } from '@prisma/client';
+import { CaretDownIcon, PlusCircledIcon } from '@radix-ui/react-icons';
 import { Avatar, Box, Button, Container, DropdownMenu, Flex, Text } from '@radix-ui/themes';
+import classnames from 'classnames';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { BsBugFill } from "react-icons/bs";
 import { Skeleton } from './components';
-import { usePathname } from 'next/navigation';
-import { Project } from '@prisma/client';
-import classnames from 'classnames';
-import { CaretDownIcon } from '@radix-ui/react-icons';
 
 const Navbar = ({ projects }: { projects: Project[]}) => {
   return (
@@ -49,7 +49,7 @@ const NavLinks = ({ projects }: { projects: Project[]}) => {
           </Link>
         </li>
       )}
-      <DropdownMenu.Root>
+      <DropdownMenu.Root key={currentPath}>
         <DropdownMenu.Trigger>
           <Button variant='ghost' size='3' color='gray'>
             Projects
@@ -64,6 +64,18 @@ const NavLinks = ({ projects }: { projects: Project[]}) => {
               </Link>
             </DropdownMenu.Item>
           ))}
+          <DropdownMenu.Separator />
+          <DropdownMenu.Item>
+            <Link href='/projects/list'>
+              See all projects
+            </Link>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item>
+            <Link href='/projects/new' className='flex items-center gap-2'>
+              <PlusCircledIcon />
+              Create new project
+            </Link>
+          </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </ul>
@@ -77,11 +89,6 @@ const AuthLinks = () => {
   if (status === 'unauthenticated') return <Link className="nav-link w-1/5 flex justify-end" href='/api/auth/signin'>Login</Link>
   return (
     <Box className='w-1/5 flex justify-end'>
-      <Link className='hidden md:block me-10' href={'/projects/new'}>
-        <Button variant='soft'>
-          Create project
-        </Button>
-      </Link>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           <Avatar

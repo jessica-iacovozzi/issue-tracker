@@ -1,12 +1,12 @@
+import BackButton from '@/app/components/BackButton';
 import Pagination from '@/app/components/Pagination';
 import prisma from '@/prisma/client';
 import { Status } from '@prisma/client';
+import { Button, Flex } from '@radix-ui/themes';
+import { Metadata } from 'next';
+import Link from 'next/link';
 import IssuesTable, { IssueQuery } from './IssuesTable';
 import IssuesToolbar from './IssuesToolbar';
-import { Metadata } from 'next';
-import { Button, Heading } from '@radix-ui/themes';
-import Link from 'next/link';
-import BackButton from '@/app/components/BackButton';
 
 interface Props {
   searchParams: IssueQuery
@@ -36,7 +36,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
   });
 
   return (
-    <>
+    <Flex direction='column'>
       <BackButton />
       {issues.length ?
         <>
@@ -44,18 +44,15 @@ const IssuesPage = async ({ searchParams }: Props) => {
           <IssuesTable searchParams={searchParams} issues={issues} />
         </>
         :
-        <>
-          <Heading size='7' mb='5'>Create your first issue</Heading>
-          <Button className="w-fit">
-            <Link href='/issues/new'>Save</Link>
-          </Button>
-        </>
-        }
+        <Button className="w-fit">
+          <Link href='/issues/new'>Create your first issue</Link>
+        </Button>
+      }
       <Pagination
         itemCount={issuesCount}
         pageSize={pageSize}
         currentPage={page} />
-    </>
+    </Flex>
   )
 };
 

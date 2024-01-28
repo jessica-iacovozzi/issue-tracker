@@ -9,7 +9,7 @@ const BackButton = () => {
   const router = useRouter();
 
   return (
-    <Button onClick={() => router.back()} variant='ghost' color='gray' ml='2' mb='5'>
+    <Button onClick={() => router.back()} variant='ghost' color='gray' ml='2' mb='5' className='w-fit'>
       <ArrowLeftIcon />
       Back
     </Button>
