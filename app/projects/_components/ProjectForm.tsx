@@ -40,6 +40,7 @@ const ProjectForm = ({ project }: { project?: Project }) => {
                 .then(() => {
                   toast.success('Project was created successfully!');
                   router.push('/projects/list');
+                  router.refresh();
                 })
     } catch (error) {
       setSubmitting(false);
