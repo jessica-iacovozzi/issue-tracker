@@ -1,12 +1,14 @@
 import { Skeleton } from '@/app/components';
 import { Table } from '@radix-ui/themes';
 import IssuesToolbar from './IssuesToolbar';
+import BackButton from '@/app/components/BackButton';
 
 const LoadingIssuesPage = async () => {
   const issues = [1, 2, 3, 4, 5];
 
   return (
     <div>
+      <BackButton />
       <IssuesToolbar link='/issues/list' />
       <Table.Root variant='surface'>
         <Table.Header>

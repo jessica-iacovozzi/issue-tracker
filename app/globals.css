@@ -11,6 +11,9 @@ body {
   min-height: 100vh;
 }
 
+.rt-BaseButton:where(.rt-variant-solid) {
+  background-color: var(--accent-9) !important;
+}
 
 @layer base {
   body {
