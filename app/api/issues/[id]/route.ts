@@ -32,6 +32,13 @@ export async function PATCH(
   if (!issue)
     return NextResponse.json({ error: 'Issue does not exist.' }, { status: 404 })
 
+  const user = await prisma.user.findUnique({
+    where: { email: session.user!.email! }
+  });
+
+  if (issue.creatorId !== user?.id)
+    return NextResponse.json({ error: 'Only the issue creator can edit this issue.' }, { status: 403 })
+
   const updatedIssue = await prisma.issue.update({
     where: { id: issue.id },
     data: {
@@ -63,6 +70,13 @@ export async function DELETE(
   if (!issue)
     return NextResponse.json({ error: 'Issue does not exist.' }, { status: 404 })
 
+  const user = await prisma.user.findUnique({
+    where: { email: session.user!.email! }
+  });
+
+  if (issue.creatorId !== user?.id)
+    return NextResponse.json({ error: 'Only the issue creator can delete this issue.' }, { status: 403 })
+  
   await prisma.issue.delete({
     where: { id: issue.id }
   });

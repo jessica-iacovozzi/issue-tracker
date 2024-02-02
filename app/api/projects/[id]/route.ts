@@ -5,7 +5,7 @@ import prisma from "@/prisma/client";
 import { patchProjectSchema } from "@/app/validationSchema";
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
-  const session = getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
   if (!session)
     return NextResponse.json({}, { status: 401 })
@@ -21,7 +21,14 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
   );
 
   if (!project)
-    return NextResponse.json({ error: 'Project does not exist' }, { status: 404 })
+    return NextResponse.json({ error: 'Project does not exist.' }, { status: 404 })
+
+  const user = await prisma.user.findUnique({
+    where: { email: session.user!.email! }
+  });
+
+  if (project.managerId !== user?.id)
+    return NextResponse.json({ error: 'Only the project manager can edit this project.' }, { status: 403 })
 
   const updatedProject = await prisma.project.update({
     where: { id: project.id },
@@ -35,7 +42,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 };
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string }}) {
-  const session = getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
   if (!session)
     return NextResponse.json({}, { status: 401 })
@@ -46,6 +53,13 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
   if (!project)
     return NextResponse.json({ error: 'Project does not exist.'}, { status: 404 })
+
+  const user = await prisma.user.findUnique({
+    where: { email: session.user!.email! }
+  });
+
+  if (project.managerId !== user?.id)
+    return NextResponse.json({ error: 'Only the project manager can delete this project.' }, { status: 403 })
 
   await prisma.project.delete({
     where: { id: project.id }
