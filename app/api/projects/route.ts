@@ -5,12 +5,19 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 
 export async function POST(request: NextRequest) {
-  const session = getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
   if (!session)
     return NextResponse.json({}, { status: 401 })
 
   const body = await request.json();
+
+  const user = await prisma.user.findUnique({
+    where: { email: session.user!.email! }
+  });
+
+  body.managerId = user?.id;
+  
   const validation = projectSchema.safeParse(body);
 
   if (!validation.success)
