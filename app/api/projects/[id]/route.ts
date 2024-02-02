@@ -10,7 +10,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
   if (!session)
     return NextResponse.json({}, { status: 401 })
 
-  const body = request.json();
+  const body = await request.json();
   const validation = patchProjectSchema.safeParse(body);
 
   if (!validation.success)
@@ -25,7 +25,10 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 
   const updatedProject = await prisma.project.update({
     where: { id: project.id },
-    data: { title: project.title }
+    data: {
+      title: body.title,
+      managerId: body.managerId
+    }
   });
 
   return NextResponse.json(updatedProject)

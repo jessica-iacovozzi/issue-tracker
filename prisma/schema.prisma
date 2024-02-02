@@ -11,9 +11,11 @@ datasource db {
 }
 
 model Project {
-  id     Int     @id @default(autoincrement())
-  title  String  @db.VarChar(255)
-  issues Issue[]
+  id        Int     @id @default(autoincrement())
+  title     String  @db.VarChar(255)
+  issues    Issue[]
+  managerId String  @db.VarChar(255)
+  manager   User    @relation(fields: [managerId], references: [id])
 }
 
 model Issue {
@@ -23,11 +25,13 @@ model Issue {
   status      Status   @default(OPEN)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  assigneeId  String?  @db.VarChar(255)
-  assignee    User?    @relation(fields: [assigneeId], references: [id])
   projectId   Int      @default(autoincrement())
   project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   images      String[] @default([])
+  creatorId   String   @db.VarChar(255)
+  creator     User     @relation(name: "CreatedIssues", fields: [creatorId], references: [id])
+  assigneeId  String?  @db.VarChar(255)
+  assignee    User?    @relation(name: "AssignedIssues", fields: [assigneeId], references: [id])
 }
 
 enum Status {
@@ -72,7 +76,9 @@ model User {
   image          String?
   accounts       Account[]
   sessions       Session[]
-  assignedIssues Issue[]
+  assignedIssues Issue[]   @relation(name: "AssignedIssues")
+  createdIssues  Issue[]   @relation(name: "CreatedIssues")
+  projects       Project[]
 }
 
 model VerificationToken {

@@ -16,14 +16,15 @@ export async function POST(request: NextRequest) {
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
 
-  const { title, description, projectId, images } = body;
+  const { title, description, projectId, images, creatorId } = body;
 
   const newIssue = await prisma.issue.create({
     data: {
       title,
       description,
       projectId,
-      images
+      images,
+      creatorId
     }
   });
 

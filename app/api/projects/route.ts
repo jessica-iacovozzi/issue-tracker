@@ -17,7 +17,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(validation.error.errors, { status: 400 })
 
   const newProject = await prisma.project.create({
-    data: { title: body.title }
+    data: {
+      title: body.title,
+      managerId: body.managerId
+    }
   });
 
   return NextResponse.json(newProject, { status: 201 })
