@@ -5,6 +5,8 @@ import prisma from "@/prisma/client";
 import ProjectsToolbar from "./ProjectsToolbar";
 import authOptions from "@/app/auth/authOptions";
 import { getServerSession } from "next-auth";
+import { Button } from "@radix-ui/themes";
+import Link from "next/link";
 
 interface Props {
   searchParams: ProjectQuery
@@ -25,8 +27,16 @@ const ProjectList = async ({ searchParams }: Props) => {
 
   return (
     <>
-      <ProjectsToolbar />
-      <ProjectsTable searchParams={searchParams} projects={projects} />
+      {projects.length ?
+        <>
+          <ProjectsToolbar />
+          <ProjectsTable searchParams={searchParams} projects={projects} />
+        </>
+        :
+        <Button className="w-fit">
+          <Link href='/projects/new'>Create your first project</Link>
+        </Button>
+      }
       <Pagination
         itemCount={projectCount}
         pageSize={pageSize}
