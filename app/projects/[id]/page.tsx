@@ -5,13 +5,13 @@ import IssuesTable, { IssueQuery } from "@/app/issues/list/IssuesTable";
 import IssuesToolbar from "@/app/issues/list/IssuesToolbar";
 import prisma from "@/prisma/client";
 import { Status } from "@prisma/client";
-import { Box, Button, Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { Box, Button, Flex, Grid, Heading } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
+import Link from 'next/link';
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import DeleteProjectButton from "./DeleteProjectButton";
 import EditProjectButton from "./EditProjectButton";
-import Link from 'next/link';
 
 interface Props {
   params: { id: string },

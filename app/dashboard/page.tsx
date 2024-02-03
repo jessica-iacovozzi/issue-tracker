@@ -4,11 +4,26 @@ import IssueSummary from "./IssueSummary";
 import LatestIssues from "./LatestIssues";
 import prisma from "@/prisma/client";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import authOptions from "../auth/authOptions";
 
 export default async function Home() {
-  const open = await prisma.issue.count({ where: { status: 'OPEN' }});
-  const closed = await prisma.issue.count({ where: { status: 'CLOSED' }});
-  const ongoing = await prisma.issue.count({ where: { status: 'ONGOING' }});
+  const session = await getServerSession(authOptions);
+
+  const open = await prisma.issue.count({ where: {
+    status: 'OPEN',
+    creator: session?.user
+  }});
+
+  const closed = await prisma.issue.count({ where: {
+    status: 'CLOSED',
+    creator: session?.user
+  }});
+
+  const ongoing = await prisma.issue.count({ where: {
+    status: 'ONGOING',
+    creator: session?.user
+  }});
 
   return (
     <Grid columns={{ initial: '1', md: '2' }} gap='5'>

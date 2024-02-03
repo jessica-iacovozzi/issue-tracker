@@ -3,17 +3,21 @@ import { Metadata } from "next";
 import ProjectsTable, { ProjectQuery } from "./ProjectsTable";
 import prisma from "@/prisma/client";
 import ProjectsToolbar from "./ProjectsToolbar";
+import authOptions from "@/app/auth/authOptions";
+import { getServerSession } from "next-auth";
 
 interface Props {
   searchParams: ProjectQuery
 }
 
 const ProjectList = async ({ searchParams }: Props) => {
-  const projectCount = await prisma.project.count();
+  const session = await getServerSession(authOptions);
+  const projectCount = await prisma.project.count({ where: { manager: session?.user }});
   const pageSize = 10;
   const page = parseInt(searchParams.page) || 1;
 
   const projects = await prisma.project.findMany({
+    where: { manager: session?.user },
     orderBy: searchParams.orderBy === 'title' ? { title: searchParams.orderDirection } : undefined,
     skip: (page - 1) * pageSize,
     take: pageSize

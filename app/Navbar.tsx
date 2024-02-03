@@ -87,6 +87,7 @@ const AuthLinks = () => {
 
   if (status === 'loading') return <Flex justify='end' className='w-1/5'><Skeleton width='3rem'></Skeleton></Flex>
   if (status === 'unauthenticated') return <Link className="nav-link w-1/5 flex justify-end" href='/api/auth/signin'>Login</Link>
+
   return (
     <Box className='w-1/5 flex justify-end'>
       <DropdownMenu.Root>

@@ -8,6 +8,8 @@ import './globals.css';
 import './theme-config.css';
 import prisma from '@/prisma/client';
 import { Container, Theme } from '@radix-ui/themes';
+import { getServerSession } from 'next-auth';
+import authOptions from './auth/authOptions';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,12 +18,9 @@ export const metadata: Metadata = {
   description: 'Track your project issues easily. Created by Jessica Iacovozzi',
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const projects = await prisma.project.findMany();
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const session = await getServerSession(authOptions);
+  const projects = await prisma.project.findMany({ where: { manager: session?.user } });
 
   return (
     <html lang="en">
