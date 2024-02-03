@@ -3,6 +3,7 @@ import IssueFormSkeleton from '../_components/IssueFormSkeleton';
 import { Metadata } from 'next';
 import prisma from '@/prisma/client';
 import { ProjectQuery } from '@/app/projects/list/ProjectsTable';
+import { getServerSession } from 'next-auth';
 
 interface Props {
   searchParams: ProjectQuery
@@ -17,7 +18,8 @@ const IssueForm = dynamic(
 )
 
 const NewIssuePage = async ({ searchParams }: Props) => {
-  const projects = await prisma.project.findMany();
+  const session = await getServerSession();
+  const projects = await prisma.project.findMany({ where: { manager: session?.user }});
 
   return (
     <IssueForm projects={projects} stringProjectId={searchParams.project} />

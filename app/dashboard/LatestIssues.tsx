@@ -2,9 +2,12 @@ import { Table, Flex, Avatar, Card, Heading } from '@radix-ui/themes'
 import prisma from '@/prisma/client';
 import { IssueStatusBadge } from '../components';
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
 
 const LatestIssues = async () => {
+  const session = await getServerSession();
   const issues = await prisma.issue.findMany({
+    where: { creator: session?.user },
     orderBy: { createdAt: 'desc' },
     take: 5,
     include: {
@@ -13,7 +16,7 @@ const LatestIssues = async () => {
   });
 
   if (!issues) return null;
-  
+
   return (
     <Card>
       <Heading m='3' size='7'>Latest Issues</Heading>
