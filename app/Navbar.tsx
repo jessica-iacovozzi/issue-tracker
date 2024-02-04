@@ -32,8 +32,8 @@ const Navbar = ({ projects }: { projects: Project[]}) => {
 const NavLinks = ({ projects }: { projects: Project[]}) => {
   const currentPath = usePathname();
   const links = [
-    { label: 'Dashboard', href: '/dashboard' },
-    { label: 'Issues', href: '/issues/list' }
+    // { label: 'Dashboard', href: '/dashboard' },
+    { label: 'My issues', href: '/issues/list' }
   ];
 
   return (
@@ -52,7 +52,7 @@ const NavLinks = ({ projects }: { projects: Project[]}) => {
       <DropdownMenu.Root key={currentPath}>
         <DropdownMenu.Trigger>
           <Button variant='ghost' size='3' color='gray'>
-            Projects
+            My projects
             <CaretDownIcon width="16" height="16" />
           </Button>
         </DropdownMenu.Trigger>

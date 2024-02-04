@@ -5,9 +5,9 @@ import LatestIssues from "./LatestIssues";
 import prisma from "@/prisma/client";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import authOptions from "../auth/authOptions";
+import authOptions from "../../auth/authOptions";
 
-export default async function Home() {
+const Dashboard = async () => {
   const session = await getServerSession(authOptions);
 
   const open = await prisma.issue.count({ where: {
@@ -26,7 +26,7 @@ export default async function Home() {
   }});
 
   return (
-    <Grid columns={{ initial: '1', md: '2' }} gap='5'>
+    <Grid columns={{ initial: '1', md: '2' }} gap='5' mb='5'>
       <Flex direction='column' gap='5'>
         <IssueSummary open={open} closed={closed} ongoing={ongoing} />
         <IssueChart open={open} closed={closed} ongoing={ongoing} />
@@ -42,3 +42,5 @@ export const metadata: Metadata = {
   title: 'Issue Tracker - Dashboard',
   description: 'View a summary of project issues'
 };
+
+export default Dashboard

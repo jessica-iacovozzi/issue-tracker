@@ -1,17 +1,15 @@
-import authOptions from "@/app/auth/authOptions";
 import BackButton from "@/app/components/BackButton";
 import Pagination from "@/app/components/Pagination";
 import IssuesTable, { IssueQuery } from "@/app/issues/list/IssuesTable";
 import IssuesToolbar from "@/app/issues/list/IssuesToolbar";
 import prisma from "@/prisma/client";
 import { Status } from "@prisma/client";
-import { Box, Button, Flex, Grid, Heading } from "@radix-ui/themes";
-import { getServerSession } from "next-auth";
+import { Button, Flex, Heading } from "@radix-ui/themes";
 import Link from 'next/link';
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import DeleteProjectButton from "./DeleteProjectButton";
 import EditProjectButton from "./EditProjectButton";
+import DeleteProjectButton from "./DeleteProjectButton";
 
 interface Props {
   params: { id: string },
@@ -46,37 +44,31 @@ const ProjectIssuesPage = async ({ params, searchParams }: Props) => {
     }
   });
 
-  const session = await getServerSession(authOptions);
-
   return (
-    <Grid columns={{ initial: '1', sm: '5' }} gap='5'>
-      <Box className='max-w-3xl sm:col-span-4'>
-        <BackButton />
-        <Heading size='7' mb='5'>{project.title}</Heading>
-        {issues.length ?
-          <>
-            <IssuesToolbar link={`/projects/${project.id}`} />
-            <IssuesTable searchParams={searchParams} issues={issues} />
-          </>
-          :
-          <Button className="w-fit">
-            <Link href={'/issues/new?project=' + project.id}>Create your first issue</Link>
-          </Button>
-        }
-        <Pagination
-          itemCount={issuesCount}
-          pageSize={pageSize}
-          currentPage={page}/>
-      </Box>
-      {session &&
-        <Box>
-          <Flex direction='column' gap='4'>
-            <EditProjectButton projectId={project.id} />
-            <DeleteProjectButton projectId={project.id} />
-          </Flex>
-        </Box>
+    <>
+      <BackButton />
+      <Flex mb='6' justify='between'>
+        <Heading>Project: {project.title}</Heading>
+        <Flex gap='2'>
+          <EditProjectButton projectId={project.id} />
+          <DeleteProjectButton projectId={project.id} />
+        </Flex>
+      </Flex>
+      {issues.length ?
+        <>
+          <IssuesToolbar link={`/projects/${project.id}`} />
+          <IssuesTable searchParams={searchParams} issues={issues} />
+        </>
+        :
+        <Button className="w-fit">
+          <Link href={'/issues/new?project=' + project.id}>Create your first issue</Link>
+        </Button>
       }
-    </Grid>
+      <Pagination
+        itemCount={issuesCount}
+        pageSize={pageSize}
+        currentPage={page}/>
+    </>
   )
 }
 

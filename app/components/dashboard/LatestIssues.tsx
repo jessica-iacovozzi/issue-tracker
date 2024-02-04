@@ -1,6 +1,6 @@
 import { Table, Flex, Avatar, Card, Heading } from '@radix-ui/themes'
 import prisma from '@/prisma/client';
-import { IssueStatusBadge } from '../components';
+import { IssueStatusBadge } from '..';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 
