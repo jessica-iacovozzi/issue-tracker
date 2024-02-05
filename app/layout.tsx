@@ -27,14 +27,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={inter.className}>
         <QueryClientProvider>
           <AuthProvider>
-            <Theme accentColor="teal">
+            <Theme accentColor="teal" className='min-h-screen'>
               <Navbar projects={projects} />
-              <main className='p-5'>
+              <main className='p-5 pb-20'>
                 <Container>
                   {children}
                 </Container>
               </main>
-              <footer className='flex justify-center border-t py-5'>
+              <footer className='flex justify-center border-t py-5 absolute bottom-0 w-full'>
                 <Text size='1'>© 2024 Issue Tracker - Made with ❤️ by Jessica Iacovozzi</Text>
               </footer>
             </Theme>

@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation';
 import DeleteIssueButton from './DeleteIssueButton';
 import EditIssueButton from './EditIssueButton';
 import IssueDetails from './IssueDetails';
-import AssigneeSelect from './AssigneeSelect';
+// import AssigneeSelect from './AssigneeSelect';
 import { cache } from 'react';
 import StatusSelect from './StatusSelect';
 import BackButton from '@/app/components/BackButton';
@@ -27,15 +27,15 @@ const IssueDetailPage = async ({ params }: Props) => {
 
   return (
     <Grid columns={{ initial: '1', sm: '5' }} gap='5'>
-      <Box className='max-w-3xl sm:col-span-4'>
+      <Box className='sm:col-span-4'>
         <BackButton />
         <IssueDetails issue={issue} />
         <IssueImages issue={issue} />
       </Box>
       {session &&
-        <Box>
+        <Box mt='9' ml='2'>
           <Flex direction='column' gap='4'>
-            <AssigneeSelect issue={issue} />
+            {/* <AssigneeSelect issue={issue} /> */}
             <StatusSelect issue={issue} />
             <EditIssueButton issue={issue} />
             <DeleteIssueButton issueId={issue.id} />

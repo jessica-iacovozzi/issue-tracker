@@ -26,13 +26,11 @@ const LatestIssues = async () => {
             <Table.Row key={issue.id}>
               <Table.Cell>
                 <Flex justify='between' align='center'>
-                  <Flex direction='column' align='start' gap='1'>
-                    <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
-                    <IssueStatusBadge status={issue.status} />
-                  </Flex>
-                  {issue.assignee && (
+                  <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+                  <IssueStatusBadge status={issue.status} />
+                  {/* {issue.assignee && (
                     <Avatar size='2' radius='full' src={issue.assignee.image!} fallback='?' />
-                  )}
+                  )} */}
                 </Flex>
               </Table.Cell>
             </Table.Row>

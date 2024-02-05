@@ -74,19 +74,22 @@ const IssuesTable = ({ searchParams, issues }: Props) => {
             <Table.Cell width='15%' className='hidden sm:table-cell'>
               <IssueStatusBadge status={issue.status} />
             </Table.Cell>
-            <Table.Cell width='20%' className='hidden sm:table-cell'>
-              {issue.createdAt.toDateString()}
-            </Table.Cell>
             {issue.projectId && isIssuesListPage && (
               <Table.Cell width='20%'>
                 <Link href={`/projects/${issue.projectId}`}>{issue.project.title}</Link>
               </Table.Cell>
             )}
-            <Table.Cell align='center'>
+            <Table.Cell width='15%' className='hidden sm:table-cell'>
+              {issue.createdAt.toDateString()}
+            </Table.Cell>
+            <Table.Cell width='15%' className='hidden sm:table-cell'>
+              {issue.updatedAt.toDateString()}
+            </Table.Cell>
+            {/* <Table.Cell align='center'>
             {issue.assigneeId && (
               <Avatar size='2' radius='full' src={issue.assignee!.image!} fallback='?' />
             )}
-            </Table.Cell>
+            </Table.Cell> */}
           </Table.Row>
         ))}
       </Table.Body>
@@ -97,9 +100,10 @@ const IssuesTable = ({ searchParams, issues }: Props) => {
 const columns: { label: string, value: string, className?: string }[] = [
   { label: 'Issue', value: 'title' },
   { label: 'Status', value: 'status', className: 'hidden sm:table-cell' },
-  { label: 'Created', value: 'createdAt', className: 'hidden sm:table-cell' },
   { label: 'Project', value: 'projectId' },
-  { label: 'Assignee', value: 'assigneeId' }
+  { label: 'Created', value: 'createdAt', className: 'hidden sm:table-cell' },
+  { label: 'Updated', value: 'updatedAt', className: 'hidden sm:table-cell' },
+  // { label: 'Assignee', value: 'assigneeId' }
 ];
 
 export default IssuesTable

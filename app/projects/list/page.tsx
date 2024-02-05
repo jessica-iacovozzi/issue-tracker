@@ -5,8 +5,9 @@ import prisma from "@/prisma/client";
 import ProjectsToolbar from "./ProjectsToolbar";
 import authOptions from "@/app/auth/authOptions";
 import { getServerSession } from "next-auth";
-import { Button } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
+import BackButton from "@/app/components/BackButton";
 
 interface Props {
   searchParams: ProjectQuery
@@ -26,7 +27,8 @@ const ProjectList = async ({ searchParams }: Props) => {
   });
 
   return (
-    <>
+    <Flex direction='column'>
+      <BackButton />
       {projects.length ?
         <>
           <ProjectsToolbar />
@@ -41,7 +43,7 @@ const ProjectList = async ({ searchParams }: Props) => {
         itemCount={projectCount}
         pageSize={pageSize}
         currentPage={page} />
-    </>
+    </Flex>
   )
 };
 
