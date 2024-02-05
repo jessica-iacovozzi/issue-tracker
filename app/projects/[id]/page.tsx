@@ -54,16 +54,8 @@ const ProjectIssuesPage = async ({ params, searchParams }: Props) => {
           <DeleteProjectButton projectId={project.id} />
         </Flex>
       </Flex>
-      {issues.length ?
-        <>
-          <IssuesToolbar link={`/projects/${project.id}`} />
-          <IssuesTable searchParams={searchParams} issues={issues} />
-        </>
-        :
-        <Button className="w-fit">
-          <Link href={'/issues/new?project=' + project.id}>Create your first issue</Link>
-        </Button>
-      }
+      <IssuesToolbar link={`/projects/${project.id}`} />
+      <IssuesTable searchParams={searchParams} issues={issues} />
       <Pagination
         itemCount={issuesCount}
         pageSize={pageSize}

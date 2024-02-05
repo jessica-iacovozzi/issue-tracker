@@ -49,16 +49,8 @@ const IssuesPage = async ({ searchParams }: Props) => {
   return (
     <Flex direction='column'>
       <BackButton />
-      {issues.length ?
-        <>
-          <IssuesToolbar link='/issues/list' />
-          <IssuesTable searchParams={searchParams} issues={issues} />
-        </>
-        :
-        <Button className="w-fit">
-          <Link href='/issues/new'>Create your first issue</Link>
-        </Button>
-      }
+      <IssuesToolbar link='/issues/list' />
+      <IssuesTable searchParams={searchParams} issues={issues} />
       <Pagination
         itemCount={issuesCount}
         pageSize={pageSize}

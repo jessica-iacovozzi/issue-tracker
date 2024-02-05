@@ -36,6 +36,8 @@ const IssuesTable = ({ searchParams, issues }: Props) => {
   const pathname = usePathname();
   const isIssuesListPage = pathname === '/issues/list';
 
+  if (!issues.length) return <Text>No issues.</Text>;
+
   return (
     <Table.Root variant='surface'>
       <Table.Header>
@@ -54,12 +56,12 @@ const IssuesTable = ({ searchParams, issues }: Props) => {
                     <ArrowUpIcon className='inline align-text-bottom ms-1' />
                   ) : (
                     <ArrowDownIcon className='inline align-text-bottom ms-1' />
-                  )}
+                    )}
                 </>
               )}
             </Table.ColumnHeaderCell>
             )
-          ))}
+            ))}
         </Table.Row>
       </Table.Header>
       <Table.Body>
