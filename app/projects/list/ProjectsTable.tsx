@@ -1,6 +1,6 @@
-import { Project } from "@prisma/client";
+import { Issue, Project } from "@prisma/client";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
-import { Table } from "@radix-ui/themes";
+import { Table, TableColumnHeaderCell } from "@radix-ui/themes";
 import Link from "next/link";
 
 export interface ProjectQuery {
@@ -12,7 +12,9 @@ export interface ProjectQuery {
 
 interface Props {
   searchParams: ProjectQuery;
-  projects: Project[];
+  projects: ({
+    issues: Issue[];
+  } & Project)[];
 }
 
 const ProjectsTable = ({ searchParams, projects }: Props) => {
@@ -20,7 +22,7 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
     <Table.Root variant='surface'>
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeaderCell key='title'>
+          <Table.ColumnHeaderCell>
             <Link href={{
               query: { ...searchParams, orderBy: 'title', orderDirection: searchParams.orderDirection === 'asc' ? 'desc' : 'asc' }
             }}>Project</Link>
@@ -34,6 +36,14 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
               </>
             )}
           </Table.ColumnHeaderCell>
+          {columns.map(column => (
+            <TableColumnHeaderCell align="center" className="hidden sm:table-cell">
+              {column.label} Issues
+            </TableColumnHeaderCell>
+          ))}
+          <TableColumnHeaderCell align="center">
+            Total Issues
+          </TableColumnHeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -42,11 +52,25 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
             <Table.Cell>
               <Link href={`/projects/${project.id}`}>{project.title}</Link>
             </Table.Cell>
+            {columns.map(column => (
+              <Table.Cell align="center" className="hidden sm:table-cell">
+                {project.issues.filter(issue => issue.status === column.value).length}
+              </Table.Cell>
+            ))}
+            <Table.Cell align="center">
+              {project.issues.length}
+            </Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>
     </Table.Root>
   )
 }
+
+const columns = [
+  { label: 'Open', value: 'OPEN' },
+  { label: 'Ongoing', value: 'ONGOING' },
+  { label: 'Closed', value: 'CLOSED' }
+]
 
 export default ProjectsTable

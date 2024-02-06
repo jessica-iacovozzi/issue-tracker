@@ -23,7 +23,10 @@ const ProjectList = async ({ searchParams }: Props) => {
     where: { manager: session?.user },
     orderBy: searchParams.orderBy === 'title' ? { title: searchParams.orderDirection } : undefined,
     skip: (page - 1) * pageSize,
-    take: pageSize
+    take: pageSize,
+    include: {
+      issues: true
+    }
   });
 
   return (
