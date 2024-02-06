@@ -10,19 +10,21 @@ import authOptions from "../../auth/authOptions";
 const Dashboard = async () => {
   const session = await getServerSession(authOptions);
 
+  if (!session) return null;
+  
   const open = await prisma.issue.count({ where: {
     status: 'OPEN',
-    creator: session?.user
+    creator: session!.user
   }});
 
   const closed = await prisma.issue.count({ where: {
     status: 'CLOSED',
-    creator: session?.user
+    creator: session!.user
   }});
 
   const ongoing = await prisma.issue.count({ where: {
     status: 'ONGOING',
-    creator: session?.user
+    creator: session!.user
   }});
 
   return (
