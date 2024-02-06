@@ -64,7 +64,7 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
               <Link href={`/projects/${project.id}`}>{project.title}</Link>
             </Table.Cell>
             {columns.map(column => (
-              <Table.Cell align="center" className="hidden sm:table-cell">
+              <Table.Cell key={column.label} align="center" className="hidden sm:table-cell">
                 {project.issues.filter(issue => issue.status === column.status).length}
               </Table.Cell>
             ))}
