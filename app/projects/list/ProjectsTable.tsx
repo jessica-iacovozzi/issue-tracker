@@ -1,10 +1,10 @@
-import { Issue, Project } from "@prisma/client";
+import { Issue, Project, Status } from "@prisma/client";
 import { ArrowDownIcon, ArrowUpIcon } from "@radix-ui/react-icons";
 import { Table, TableColumnHeaderCell } from "@radix-ui/themes";
 import Link from "next/link";
 
 export interface ProjectQuery {
-  orderBy: string;
+  orderBy: string | Status;
   orderDirection: 'asc' | 'desc';
   page: string;
   project: string;
@@ -37,12 +37,23 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
             )}
           </Table.ColumnHeaderCell>
           {columns.map(column => (
-            <TableColumnHeaderCell align="center" className="hidden sm:table-cell">
+            <TableColumnHeaderCell key={column.status} align="center" className="hidden sm:table-cell">
               {column.label} Issues
             </TableColumnHeaderCell>
           ))}
           <TableColumnHeaderCell align="center">
-            Total Issues
+          <Link href={{
+              query: { ...searchParams, orderBy: 'issues', orderDirection: searchParams.orderDirection === 'asc' ? 'desc' : 'asc' }
+            }}>Total issues</Link>
+            {searchParams.orderBy === 'issues' && (
+              <>
+                {searchParams.orderDirection === 'asc' ? (
+                  <ArrowUpIcon className='inline align-text-bottom ms-1' />
+                ) : (
+                  <ArrowDownIcon className='inline align-text-bottom ms-1' />
+                )}
+              </>
+            )}
           </TableColumnHeaderCell>
         </Table.Row>
       </Table.Header>
@@ -54,7 +65,7 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
             </Table.Cell>
             {columns.map(column => (
               <Table.Cell align="center" className="hidden sm:table-cell">
-                {project.issues.filter(issue => issue.status === column.value).length}
+                {project.issues.filter(issue => issue.status === column.status).length}
               </Table.Cell>
             ))}
             <Table.Cell align="center">
@@ -67,10 +78,10 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
   )
 }
 
-const columns = [
-  { label: 'Open', value: 'OPEN' },
-  { label: 'Ongoing', value: 'ONGOING' },
-  { label: 'Closed', value: 'CLOSED' }
+const columns: { label: string, status: Status }[] = [
+  { label: 'Open', status: 'OPEN' },
+  { label: 'Ongoing', status: 'ONGOING' },
+  { label: 'Closed', status: 'CLOSED' }
 ]
 
 export default ProjectsTable

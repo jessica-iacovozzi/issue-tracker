@@ -1,13 +1,13 @@
-import Pagination from "@/app/components/Pagination";
-import { Metadata } from "next";
-import ProjectsTable, { ProjectQuery } from "./ProjectsTable";
-import prisma from "@/prisma/client";
-import ProjectsToolbar from "./ProjectsToolbar";
 import authOptions from "@/app/auth/authOptions";
-import { getServerSession } from "next-auth";
-import { Button, Flex } from "@radix-ui/themes";
-import Link from "next/link";
 import BackButton from "@/app/components/BackButton";
+import Pagination from "@/app/components/Pagination";
+import prisma from "@/prisma/client";
+import { Button, Flex } from "@radix-ui/themes";
+import { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
+import ProjectsTable, { ProjectQuery } from "./ProjectsTable";
+import ProjectsToolbar from "./ProjectsToolbar";
 
 interface Props {
   searchParams: ProjectQuery
@@ -21,10 +21,19 @@ const ProjectList = async ({ searchParams }: Props) => {
 
   const projects = await prisma.project.findMany({
     where: { manager: session?.user },
-    orderBy: searchParams.orderBy === 'title' ? { title: searchParams.orderDirection } : undefined,
+    orderBy:
+      searchParams.orderBy === 'title' ?
+      { 'title': searchParams.orderDirection } :
+      { [searchParams.orderBy]: { '_count': searchParams.orderDirection } }
+    || undefined,
     skip: (page - 1) * pageSize,
     take: pageSize,
     include: {
+      _count: {
+        select: {
+          issues: true
+        }
+      },
       issues: true
     }
   });
