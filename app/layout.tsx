@@ -10,6 +10,7 @@ import AuthProvider from './auth/Provider';
 import authOptions from './auth/authOptions';
 import './globals.css';
 import './theme-config.css';
+import { HeartIcon } from '@radix-ui/react-icons';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -39,7 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 </Container>
               </main>
               <footer className='flex justify-center border-t py-5 absolute bottom-0 w-full'>
-                <Text align='center' size='1'>© 2024 Issue Tracker - Made with ❤️ by Jessica Iacovozzi</Text>
+                <Text align='center' size='1'>© 2024 Issue Tracker - Made with <HeartIcon className='inline' color='teal' /> by Jessica Iacovozzi</Text>
               </footer>
             </Theme>
           </AuthProvider>
