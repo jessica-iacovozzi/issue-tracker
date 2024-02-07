@@ -32,7 +32,7 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
     <Table.Root variant='surface'>
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell width={2/5}>
             <Link href={{
               query: { ...searchParams, orderBy: 'title', orderDirection: searchParams.orderDirection === 'asc' ? 'desc' : 'asc' }
             }}>Project</Link>
@@ -40,7 +40,7 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
           </Table.ColumnHeaderCell>
 
           {columns.map(column => (
-            <TableColumnHeaderCell key={column.status} align="center" className="hidden xs:table-cell">
+            <TableColumnHeaderCell key={column.status} width={1/5} align="center" className="hidden xs:table-cell">
               <Link href={{
               query: { ...searchParams, orderBy: 'issues', status: column.status, orderDirection: searchParams.orderDirection === 'asc' ? 'desc' : 'asc' }
             }}>{column.label}</Link>
@@ -53,12 +53,12 @@ const ProjectsTable = ({ searchParams, projects }: Props) => {
       <Table.Body>
         {projects.map(project => (
           <Table.Row key={project.id}>
-            <Table.Cell>
+            <Table.Cell width={2/5}>
               <Link href={`/projects/${project.id}`}>{project.title}</Link>
             </Table.Cell>
 
             {columns.map(column => (
-              <Table.Cell key={column.label} align="center" className="hidden xs:table-cell">
+              <Table.Cell key={column.label} width={1/5} align="center" className="hidden xs:table-cell">
                 {project.issues.filter(issue => issue.status === column.status).length}
               </Table.Cell>
             ))}
