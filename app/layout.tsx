@@ -39,7 +39,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 </Container>
               </main>
               <footer className='flex justify-center border-t py-5 absolute bottom-0 w-full'>
-                <Text size='1'>© 2024 Issue Tracker - Made with ❤️ by Jessica Iacovozzi</Text>
+                <Text align='center' size='1'>© 2024 Issue Tracker - Made with ❤️ by Jessica Iacovozzi</Text>
               </footer>
             </Theme>
           </AuthProvider>

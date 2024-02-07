@@ -22,21 +22,38 @@ const ProjectList = async ({ searchParams }: Props) => {
   const projects = await prisma.project.findMany({
     where: { manager: session?.user },
     orderBy:
-      searchParams.orderBy === 'title' ?
-      { 'title': searchParams.orderDirection } :
-      { [searchParams.orderBy]: { '_count': searchParams.orderDirection } }
+      searchParams.orderBy === 'issues' ?
+      { issues: { '_count': searchParams.orderDirection } } :
+      { 'title': searchParams.orderDirection }
     || undefined,
     skip: (page - 1) * pageSize,
     take: pageSize,
     include: {
       _count: {
         select: {
-          issues: true
+          issues: {
+            where: {
+              status: searchParams.status
+            }
+          }
         }
       },
       issues: true
     }
   });
+
+  if (searchParams.orderBy === 'issues') {
+    projects.sort((projectA, projectB) => {
+      const countA = projectA._count.issues;
+      const countB = projectB._count.issues;
+
+      if (searchParams.orderDirection === 'asc') {
+        return countA - countB;
+      } else {
+        return countB - countA;
+      }
+    })
+  }
 
   return (
     <Flex direction='column'>
