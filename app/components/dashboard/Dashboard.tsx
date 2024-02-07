@@ -1,17 +1,23 @@
-import { Flex, Grid } from "@radix-ui/themes";
-import IssueChart from "./IssueChart";
-import IssueSummary from "./IssueSummary";
-import LatestIssues from "./LatestIssues";
 import prisma from "@/prisma/client";
+import { Button, Flex, Grid, Link } from "@radix-ui/themes";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import authOptions from "../../auth/authOptions";
+import IssueChart from "./IssueChart";
+import IssueSummary from "./IssueSummary";
+import LatestIssues from "./LatestIssues";
 
 const Dashboard = async () => {
   const session = await getServerSession(authOptions);
 
-  if (!session) return null;
-  
+  if (!session) return (
+    <Flex justify='center'>
+      <Link href='/projects/new'>
+        <Button size='3'>Get Started</Button>
+      </Link>
+    </Flex>
+  )
+
   const open = await prisma.issue.count({ where: {
     status: 'OPEN',
     creator: session!.user
