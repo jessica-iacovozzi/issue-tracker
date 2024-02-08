@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation';
 import { BsBugFill } from "react-icons/bs";
 import { Skeleton } from './components';
 
-const Navbar = ({ projects }: { projects: Project[]}) => {
+const Navbar = ({ projects }: { projects?: Project[]}) => {
   return (
     <nav className='flex border-b px-6 space-x-6 items-center mb-6 h-14'>
       <Container>
@@ -29,10 +29,9 @@ const Navbar = ({ projects }: { projects: Project[]}) => {
   )
 };
 
-const NavLinks = ({ projects }: { projects: Project[]}) => {
+const NavLinks = ({ projects }: { projects?: Project[]}) => {
   const currentPath = usePathname();
   const links = [
-    // { label: 'Dashboard', href: '/dashboard' },
     { label: 'My issues', href: '/issues/list' }
   ];
 
@@ -57,14 +56,14 @@ const NavLinks = ({ projects }: { projects: Project[]}) => {
           </Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
-          {projects.map(project => (
+          {projects?.map(project => (
             <DropdownMenu.Item key={project.id}>
               <Link href={`/projects/${project.id}`}>
                 {project.title}
               </Link>
             </DropdownMenu.Item>
           ))}
-          <DropdownMenu.Separator />
+          {projects?.length && <DropdownMenu.Separator />}
           <DropdownMenu.Item>
             <Link href='/projects/list'>
               See all projects

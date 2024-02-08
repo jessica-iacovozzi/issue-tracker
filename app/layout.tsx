@@ -21,11 +21,15 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
-  const projects = await prisma.project.findMany({
-    where: { manager: session?.user },
-    take: 4,
-    orderBy: { id: 'desc' }
-  });
+  let projects;
+
+  if (session) {
+    projects = await prisma.project.findMany({
+      where: { manager: session?.user },
+      take: 4,
+      orderBy: { id: 'desc' }
+    });
+  }
 
   return (
     <html lang="en">
