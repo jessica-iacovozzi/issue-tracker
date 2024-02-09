@@ -1,15 +1,15 @@
-import { Table, Flex, Avatar, Card, Heading } from '@radix-ui/themes'
 import prisma from '@/prisma/client';
-import { IssueStatusBadge } from '..';
-import Link from 'next/link';
+import { Card, Heading, Table } from '@radix-ui/themes';
 import { getServerSession } from 'next-auth';
+import Link from 'next/link';
+import { IssueStatusBadge } from '..';
 
 const LatestIssues = async () => {
   const session = await getServerSession();
   const issues = await prisma.issue.findMany({
     where: { creator: session?.user },
     orderBy: { createdAt: 'desc' },
-    take: 5,
+    take: 7,
     include: {
       assignee: true
     }
@@ -19,19 +19,16 @@ const LatestIssues = async () => {
 
   return (
     <Card>
-      <Heading m='3' size='7'>Latest Issues</Heading>
+      <Heading mx='3' my='4' size='7'>Latest Issues</Heading>
       <Table.Root>
         <Table.Body>
           {issues.map(issue => (
             <Table.Row key={issue.id}>
-              <Table.Cell>
-                <Flex justify='between' align='center'>
-                  <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
-                  <IssueStatusBadge status={issue.status} />
-                  {/* {issue.assignee && (
-                    <Avatar size='2' radius='full' src={issue.assignee.image!} fallback='?' />
-                  )} */}
-                </Flex>
+              <Table.RowHeaderCell>
+                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+              </Table.RowHeaderCell>
+              <Table.Cell className='flex justify-end'>
+                <IssueStatusBadge status={issue.status} />
               </Table.Cell>
             </Table.Row>
           ))}
