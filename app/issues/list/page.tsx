@@ -3,10 +3,9 @@ import BackButton from '@/app/components/BackButton';
 import Pagination from '@/app/components/Pagination';
 import prisma from '@/prisma/client';
 import { Status } from '@prisma/client';
-import { Button, Flex } from '@radix-ui/themes';
+import { Flex } from '@radix-ui/themes';
 import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
-import Link from 'next/link';
 import IssuesTable, { IssueQuery } from './IssuesTable';
 import IssuesToolbar from './IssuesToolbar';
 
@@ -32,7 +31,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
     ? { [searchParams.orderBy]: searchParams.orderDirection }
     : undefined;
 
-  const pageSize = 10;
+  const pageSize = 8;
   const page = parseInt(searchParams.page) || 1
 
   const issues = await prisma.issue.findMany({

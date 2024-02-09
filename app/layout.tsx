@@ -1,4 +1,5 @@
 import prisma from '@/prisma/client';
+import { HeartIcon } from '@radix-ui/react-icons';
 import { Container, Text, Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
@@ -10,7 +11,6 @@ import AuthProvider from './auth/Provider';
 import authOptions from './auth/authOptions';
 import './globals.css';
 import './theme-config.css';
-import { HeartIcon } from '@radix-ui/react-icons';
 
 const inter = Inter({ subsets: ['latin'] });
 

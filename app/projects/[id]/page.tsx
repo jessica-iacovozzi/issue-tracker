@@ -4,12 +4,11 @@ import IssuesTable, { IssueQuery } from "@/app/issues/list/IssuesTable";
 import IssuesToolbar from "@/app/issues/list/IssuesToolbar";
 import prisma from "@/prisma/client";
 import { Status } from "@prisma/client";
-import { Button, Flex, Heading } from "@radix-ui/themes";
-import Link from 'next/link';
+import { Flex, Heading } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import EditProjectButton from "./EditProjectButton";
 import DeleteProjectButton from "./DeleteProjectButton";
+import EditProjectButton from "./EditProjectButton";
 
 interface Props {
   params: { id: string },
@@ -26,7 +25,7 @@ const ProjectIssuesPage = async ({ params, searchParams }: Props) => {
   if (!project) return notFound();
 
   const issuesCount = await prisma.issue.count({ where: { status, projectId: project.id }});
-  const pageSize = 10;
+  const pageSize = 7;
   const page = parseInt(searchParams.page) || 1;
   const orderBy = columnNames
     .includes(searchParams.orderBy)

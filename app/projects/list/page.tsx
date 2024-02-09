@@ -16,7 +16,7 @@ interface Props {
 const ProjectList = async ({ searchParams }: Props) => {
   const session = await getServerSession(authOptions);
   const projectCount = await prisma.project.count({ where: { manager: session?.user }});
-  const pageSize = 10;
+  const pageSize = 8;
   const page = parseInt(searchParams.page) || 1;
 
   const projects = await prisma.project.findMany({
