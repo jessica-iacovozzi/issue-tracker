@@ -11,6 +11,8 @@ import AuthProvider from './auth/Provider';
 import authOptions from './auth/authOptions';
 import './globals.css';
 import './theme-config.css';
+import { Suspense } from 'react';
+import { Spinner } from './components';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -34,21 +36,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryClientProvider>
-          <AuthProvider>
-            <Theme accentColor="teal" className='min-h-screen'>
-              <Navbar projects={projects} />
-              <main className='p-5 pb-20'>
-                <Container>
-                  {children}
-                </Container>
-              </main>
-              <footer className='flex justify-center border-t py-5 absolute bottom-0 w-full'>
-                <Text align='center' size='1'>© 2024 Issue Tracker - Made with <HeartIcon className='inline' color='teal' /> by Jessica Iacovozzi</Text>
-              </footer>
-            </Theme>
-          </AuthProvider>
-        </QueryClientProvider>
+        <Suspense fallback={<Spinner />}>
+          <QueryClientProvider>
+            <AuthProvider>
+              <Theme accentColor="teal" className='min-h-screen'>
+                <Navbar projects={projects} />
+                <main className='p-5 pb-20'>
+                  <Container>
+                    {children}
+                  </Container>
+                </main>
+                <footer className='flex justify-center border-t py-5 absolute bottom-0 w-full'>
+                  <Text align='center' size='1'>© 2024 Issue Tracker - Made with <HeartIcon className='inline' color='teal' /> by Jessica Iacovozzi</Text>
+                </footer>
+              </Theme>
+            </AuthProvider>
+          </QueryClientProvider>
+        </Suspense>
       </body>
     </html>
   )

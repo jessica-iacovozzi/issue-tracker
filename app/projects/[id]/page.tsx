@@ -46,9 +46,9 @@ const ProjectIssuesPage = async ({ params, searchParams }: Props) => {
   return (
     <>
       <BackButton />
-      <Flex mb='6' justify='between'>
+      <Flex mb='6' justify='between' className="initial:flex-col-reverse xs:flex-row">
         <Heading>Project: {project.title}</Heading>
-        <Flex gap='2'>
+        <Flex gap='3' className="initial:mb-6 xs:m-0 initial:!justify-between">
           <EditProjectButton projectId={project.id} />
           <DeleteProjectButton projectId={project.id} />
         </Flex>

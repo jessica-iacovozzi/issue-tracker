@@ -17,6 +17,7 @@ import { RxInfoCircled } from "react-icons/rx";
 import SimpleMDE from 'react-simplemde-editor';
 import { z } from 'zod';
 import { Cross1Icon } from '@radix-ui/react-icons';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type IssueFormData = z.infer<typeof issueSchema>;
 
@@ -31,7 +32,9 @@ interface CloudinaryResult {
 }
 
 const IssueForm = ({ issue, projects, stringProjectId }: Props) => {
-  const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormData>();
+  const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormData>({
+    resolver: zodResolver(issueSchema)
+  });
   const project = parseInt(stringProjectId || '');
   const [projectId, setProjectId] = useState<number>(project);
   const [imageIds, setImageIds] = useState<string[]>(issue?.images || []);
@@ -114,21 +117,31 @@ const IssueForm = ({ issue, projects, stringProjectId }: Props) => {
             </div>
           ))}
         </Grid>
-        <Flex justify='between' mt='5'>
-          <Flex gap='4'>
+        <Flex justify='between' my='5' className='initial:flex-col gap-5 xs:flex-row'>
+          <Flex gap='4' className='initial:!justify-between xs:justify-start'>
             <Flex direction='column'>
-              <Select.Root
-                {...register('projectId')}
-                onValueChange={(value) => setProjectId(parseInt(value))}
-                defaultValue={issue?.projectId.toString() || stringProjectId}>
-                <Select.Trigger placeholder='Select a project' />
-                <Select.Content>
-                  <Select.Group>
-                    <Select.Label>Projects</Select.Label>
-                    {projects.map(project => <Select.Item key={project.id} value={project.id.toString()}>{project.title}</Select.Item>)}
-                  </Select.Group>
-                </Select.Content>
-              </Select.Root>
+              {/* <Controller
+                name='projectId'
+                control={control}
+                defaultValue={stringProjectId ? parseInt(stringProjectId) : undefined}
+                render={({field: { onChange, value }}) => */}
+                  <Select.Root
+                    {...register('projectId')}
+                    onValueChange={(value) => setProjectId(parseInt(value))}
+                    // onValueChange={(value) => onChange(parseInt(value))}
+                    defaultValue={stringProjectId}
+                    // value={value?.toString()}
+                    >
+                    <Select.Trigger placeholder='Select a project' />
+                    <Select.Content>
+                      <Select.Group>
+                        <Select.Label>Projects</Select.Label>
+                        {projects.map(project => <Select.Item key={project.id} value={project.id.toString()}>{project.title}</Select.Item>)}
+                      </Select.Group>
+                    </Select.Content>
+                  </Select.Root>
+                {/* }>
+              </Controller> */}
               <ErrorMessage>
                 {errors?.projectId?.message}
               </ErrorMessage>
