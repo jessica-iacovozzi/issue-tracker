@@ -57,24 +57,24 @@ const NavLinks = ({ projects }: { projects?: Project[]}) => {
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
           {projects?.map(project => (
-            <DropdownMenu.Item key={project.id}>
-              <Link href={`/projects/${project.id}`}>
+            <Link key={project.id} href={`/projects/${project.id}`}>
+              <DropdownMenu.Item className='!cursor-pointer'>
                 {project.title}
-              </Link>
-            </DropdownMenu.Item>
+              </DropdownMenu.Item>
+            </Link>
           ))}
           {projects?.length && <DropdownMenu.Separator />}
-          <DropdownMenu.Item>
-            <Link href='/projects/list'>
+          <Link href='/projects/list'>
+            <DropdownMenu.Item className='!cursor-pointer'>
               See all projects
-            </Link>
-          </DropdownMenu.Item>
-          <DropdownMenu.Item>
-            <Link href='/projects/new' className='flex items-center gap-2'>
+            </DropdownMenu.Item>
+          </Link>
+          <Link href='/projects/new'>
+            <DropdownMenu.Item className='flex items-center gap-1 !cursor-pointer'>
               <PlusCircledIcon />
               Create new project
-            </Link>
-          </DropdownMenu.Item>
+            </DropdownMenu.Item>
+          </Link>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </ul>
@@ -104,8 +104,8 @@ const AuthLinks = () => {
           <DropdownMenu.Label>
             <Text size="2">{session!.user!.email}</Text>
           </DropdownMenu.Label>
-          <Link className="nav-link" href="/api/auth/signout">
-            <DropdownMenu.Item>Log out</DropdownMenu.Item>
+          <Link href="/api/auth/signout">
+            <DropdownMenu.Item className='!cursor-pointer'>Log out</DropdownMenu.Item>
           </Link>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
