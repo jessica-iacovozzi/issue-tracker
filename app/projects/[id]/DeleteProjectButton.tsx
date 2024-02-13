@@ -1,6 +1,7 @@
 'use client';
 
 import { Spinner } from '@/app/components';
+import { TrashIcon } from '@radix-ui/react-icons';
 import { AlertDialog, Button, Flex } from '@radix-ui/themes';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -34,8 +35,9 @@ const DeleteProjectButton = ({projectId}: {projectId: number}) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button disabled={isDeleting} color='red'>
-            Delete project
+          <Button disabled={isDeleting} color='red' className='gap-2'>
+            <TrashIcon className='xs:hidden' />
+            <span className='hidden xs:block'>Delete project</span>
             {isDeleting && <Spinner />}
           </Button>
         </AlertDialog.Trigger>
