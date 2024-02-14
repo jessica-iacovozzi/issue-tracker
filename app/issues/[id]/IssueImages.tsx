@@ -1,16 +1,16 @@
 'use client'
 
 import { Issue } from "@prisma/client"
-import { AspectRatio, Grid } from "@radix-ui/themes"
+import { Grid } from "@radix-ui/themes"
 import { CldImage } from "next-cloudinary"
 
 const IssueImages = ({ issue }: { issue: Issue }) => {
   return (
     <Grid columns='2' gap='5' mt='5'>
       {issue.images && issue.images.map((id) => (
-        <AspectRatio key={id} ratio={4/3}>
-          <CldImage src={id} fill alt={id} className="rounded-lg" />
-        </AspectRatio>
+        <div key={id} className="relative h-80">
+          <CldImage src={id} alt={id} fill className="rounded-lg object-cover" />
+        </div>
       ))}
     </Grid>
   )
