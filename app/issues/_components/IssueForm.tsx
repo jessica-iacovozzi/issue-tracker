@@ -17,7 +17,7 @@ import { RxInfoCircled } from "react-icons/rx";
 import SimpleMDE from 'react-simplemde-editor';
 import { z } from 'zod';
 import { Cross1Icon } from '@radix-ui/react-icons';
-import { zodResolver } from '@hookform/resolvers/zod';
+// import { zodResolver } from '@hookform/resolvers/zod';
 
 type IssueFormData = z.infer<typeof issueSchema>;
 
@@ -33,7 +33,7 @@ interface CloudinaryResult {
 
 const IssueForm = ({ issue, projects, stringProjectId }: Props) => {
   const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormData>({
-    resolver: zodResolver(issueSchema)
+    // resolver: zodResolver(issueSchema)
   });
   const project = parseInt(stringProjectId || '');
   const [projectId, setProjectId] = useState<number>(project);

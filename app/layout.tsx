@@ -13,6 +13,7 @@ import './globals.css';
 import './theme-config.css';
 import { Suspense } from 'react';
 import { Spinner } from './components';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -53,6 +54,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </AuthProvider>
           </QueryClientProvider>
         </Suspense>
+        <SpeedInsights />
       </body>
     </html>
   )
