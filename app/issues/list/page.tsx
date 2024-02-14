@@ -2,7 +2,7 @@ import authOptions from '@/app/auth/authOptions';
 import BackButton from '@/app/components/BackButton';
 import Pagination from '@/app/components/Pagination';
 import prisma from '@/prisma/client';
-import { Status } from '@prisma/client';
+import { Prisma, Status } from '@prisma/client';
 import { Flex } from '@radix-ui/themes';
 import { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
@@ -26,10 +26,10 @@ const IssuesPage = async ({ searchParams }: Props) => {
   };
 
   const issuesCount = await prisma.issue.count({ where });
-  const orderBy = columnNames
+  const orderBy: Prisma.IssueOrderByWithRelationInput = columnNames
     .includes(searchParams.orderBy)
     ? { [searchParams.orderBy]: searchParams.orderDirection }
-    : undefined;
+    : { createdAt: 'desc' };
 
   const pageSize = 8;
   const page = parseInt(searchParams.page) || 1
@@ -58,7 +58,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
   )
 };
 
-const columnNames = ['title', 'status', 'createdAt', 'projectId', 'assigneeId'];
+const columnNames = ['title', 'status', 'createdAt', 'updatedAt', 'projectId', 'assigneeId'];
 
 export const dynamic = 'force-dynamic';
 
