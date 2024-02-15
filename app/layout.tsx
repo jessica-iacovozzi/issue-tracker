@@ -12,8 +12,8 @@ import authOptions from './auth/authOptions';
 import './globals.css';
 import './theme-config.css';
 import { Suspense } from 'react';
-import { Spinner } from './components';
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Loading from './Loading';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<Loading />}>
           <QueryClientProvider>
             <AuthProvider>
               <Theme accentColor="teal" className='min-h-screen'>

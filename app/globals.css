@@ -9,6 +9,7 @@
 body {
   color: rgb(var(--foreground-rgb));
   min-height: 100vh;
+  overflow: auto;
 }
 
 .rt-BaseButton:where(.rt-variant-solid) {
