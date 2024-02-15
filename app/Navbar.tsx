@@ -16,9 +16,9 @@ const Navbar = ({ projects }: { projects?: Project[]}) => {
       <Container>
         <Flex align='center' justify='between' gap='5'>
           <Link href='/' className='w-1/5'>
-            <Flex align='center' gap='2'>
+            <Flex align='center' gap='2' className='w-max'>
               <BsBugFill color='var(--accent-10)' />
-              <Text className='hidden sm:block'>ISSUE TRACꓘER</Text>
+              <Text>ISSUE TRACꓘER</Text>
             </Flex>
           </Link>
           <NavLinks projects={projects} />
@@ -36,7 +36,7 @@ const NavLinks = ({ projects }: { projects?: Project[]}) => {
   ];
 
   return (
-    <ul className='flex items-center'>
+    <ul className='items-center initial:hidden xs:flex'>
       {links.map(link =>
         <li key={link.label}>
           <Link href={link.href}
@@ -101,6 +101,13 @@ const AuthLinks = () => {
           />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
+          <Link href="/projects/list">
+            <DropdownMenu.Item className='!cursor-pointer !justify-center xs:!hidden'>My Projects</DropdownMenu.Item>
+          </Link>
+          <Link href="/issues/list">
+            <DropdownMenu.Item className='!cursor-pointer !justify-center xs:!hidden'>My Issues</DropdownMenu.Item>
+          </Link>
+          <DropdownMenu.Separator className='xs:hidden' />
           <DropdownMenu.Label>
             <Text size="2">{session!.user!.email}</Text>
           </DropdownMenu.Label>
