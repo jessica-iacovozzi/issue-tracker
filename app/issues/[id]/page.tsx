@@ -33,7 +33,7 @@ const IssueDetailPage = async ({ params }: Props) => {
         <IssueImages issue={issue} />
       </Box>
       {session &&
-        <Box mt='9' ml='2'>
+        <Box mt='5' ml='2'>
           <Flex direction='column' gap='4'>
             {/* <AssigneeSelect issue={issue} /> */}
             <StatusSelect issue={issue} />

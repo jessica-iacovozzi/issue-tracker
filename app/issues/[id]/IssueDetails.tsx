@@ -21,7 +21,7 @@ const IssueDetails = async ({ issue }: { issue: Issue }) => {
         </Flex>
         <Flex gap='4'>
           <IssueStatusBadge status={issue.status} />
-          <Text>{issue.createdAt.toDateString()}</Text>
+          <Text className='initial:hidden xs:block'>{issue.createdAt.toDateString()}</Text>
         </Flex>
       </Flex>
       <Card className='px-6 py-4' mt='4'>
