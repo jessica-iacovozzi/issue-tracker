@@ -11,7 +11,7 @@ interface Props {
 const IssueSummary = ({ open, ongoing, closed }: Props) => {
   const containers: { label: string, value: number, status: Status, color: string }[] = [
     { label: 'Open', value: open, status: 'OPEN', color: 'var(--red-a11)' },
-    { label: 'Ongoing', value: ongoing, status: 'ONGOING', color: 'var(--yellow-a11)' },
+    { label: 'Ongoing', value: ongoing, status: 'ONGOING', color: 'var(--amber-a11)' },
     { label: 'Closed', value: closed, status: 'CLOSED', color: 'var(--green-a11)' }
   ];
 
